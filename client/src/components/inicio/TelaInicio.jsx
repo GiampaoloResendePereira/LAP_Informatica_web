@@ -39,7 +39,7 @@ const TelaInicio = () => {
                 <a className="nav-link" href="/login">Login</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/cadastrar-motoboy">Cadastrar</a>
+                <a className="nav-link" href="/cadastrar">Cadastrar</a>
               </li>
             </ul>
           </div>

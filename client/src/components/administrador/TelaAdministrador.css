@@ -1,7 +1,7 @@
 /* src/pages/Administrador/TelaAdministrador.css */
 
 .admin-container {
-    background-color: #808080; /* Fundo cinza */
+    background-color: #ffffff; /* Fundo cinza */
     height: 100vh;
     display: flex;
     flex-direction: column;

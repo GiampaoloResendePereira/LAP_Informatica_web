@@ -38,10 +38,13 @@ const TelaAdministrador = () => {
                 <a className="nav-link" href="/editar-parametro">Editar Parâmetro de Cálculo de Frete</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/editar-cadastro-motoboy">Editar Cadastro</a>
+                <a className="nav-link" href="/editar-cadastro">Editar Cadastro</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/relatorios">Relatórios</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/notificacoes-admin">Notificações</a>
               </li>
             </ul>
           </div>
