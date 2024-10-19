@@ -1,0 +1,7 @@
+/* src/components/CarrosselPromocoes.css */
+.carousel-img {
+    height: 400px; /* Defina a altura desejada */
+    object-fit: cover; /* Faz com que a imagem se ajuste ao espaço disponível */
+    padding: 30px;
+  }
+  

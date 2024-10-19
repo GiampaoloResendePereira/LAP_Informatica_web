@@ -1,0 +1,36 @@
+/* src/pages/Administrador/TelaAdministrador.css */
+
+.admin-container {
+    background-color: #808080; /* Fundo cinza */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  .navbar {
+    background-color: #000; /* Navbar preta */
+  }
+  
+  .navbar-brand img {
+    height: 50px;
+  }
+  
+  .navbar-nav .nav-link {
+    color: #ffffff; /* Links brancos */
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-left: 30px;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: #cccccc; /* Cor cinza ao passar o mouse */
+  }
+  
+  .admin-content {
+    margin-top: 80px; /* Margem para evitar que o conteúdo fique atrás da navbar */
+    text-align: center;
+  }
