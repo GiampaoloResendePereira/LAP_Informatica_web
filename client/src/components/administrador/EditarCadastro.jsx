@@ -18,7 +18,7 @@ const EditarCadastro = () => {
 
   return (
     <div className="editar-container">
-      <h1>Escolha o Tipo de Usuário</h1>
+      <h1>Escolha o Tipo de Cadastro</h1>
       <div className="button-group">
         {/* Botão para editar cliente */}
         <button className="cliente" onClick={handleEditarClienteEditarCadastro}>

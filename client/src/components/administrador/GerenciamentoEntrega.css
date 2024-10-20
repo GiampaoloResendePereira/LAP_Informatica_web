@@ -1,0 +1,75 @@
+/* GerenciamentoEntrega.css */
+
+body {
+    background-color: #f4f4f4; /* Cor de fundo clara */
+    margin: 0; /* Remove margem padrão */
+    font-family: Arial, sans-serif; /* Fonte padrão */
+}
+
+.Gerenciamento {
+    max-width: 900px; /* Largura máxima do container */
+    margin: 20px auto; /* Centraliza o container com margem superior */
+    padding: 20px; /* Espaçamento interno */
+    background-color: white; /* Fundo branco */
+    border-radius: 8px; /* Cantos arredondados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+h1 {
+    color: #e63946; /* Vermelho para o título */
+    margin-bottom: 20px; /* Espaçamento inferior */
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important; /* Mantém o espaçamento desejado */
+}
+
+.d-flex {
+    align-items: center; /* Alinha verticalmente os elementos do filtro */
+}
+
+input[type="text"],
+select {
+    border: 1px solid #ccc; /* Borda cinza clara */
+    border-radius: 4px; /* Cantos arredondados */
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #e63946; /* Borda vermelha ao focar */
+    box-shadow: 0 0 5px rgba(230, 57, 70, 0.5); /* Sombra ao focar */
+}
+
+button {
+    background-color: #e63946; /* Vermelho para os botões */
+    border: none; /* Remove borda padrão */
+    border-radius: 4px; /* Cantos arredondados */
+    transition: background-color 0.3s; /* Transição suave para o fundo */
+}
+
+button:hover {
+    background-color: #d62839; /* Tom de vermelho mais escuro ao passar o mouse */
+}
+
+.table {
+    margin-top: 20px; /* Espaçamento superior da tabela */
+    border-collapse: collapse; /* Colapsa bordas */
+}
+
+.table th {
+    background-color: #333; /* Fundo escuro para o cabeçalho da tabela */
+    color: white; /* Texto branco */
+}
+
+.table td {
+    background-color: #f9f9f9; /* Fundo claro para as células */
+}
+
+.table tr:hover td {
+    background-color: #e63946; /* Fundo vermelho ao passar o mouse */
+    color: white; /* Texto branco ao passar o mouse */
+}
+
+.table td button {
+    margin-right: 5px; /* Espaçamento entre os botões */
+}

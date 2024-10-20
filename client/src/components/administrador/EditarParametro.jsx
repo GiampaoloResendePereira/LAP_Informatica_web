@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+// src/pages/EditarParametro.jsx
+import React, { useState } from 'react'; 
 import { Form, Button, Alert } from 'react-bootstrap';
+import './EditarParametro.css';
 
 const EditarParametro = () => {
   const [parametros, setParametros] = useState({

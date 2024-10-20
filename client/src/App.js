@@ -14,11 +14,11 @@ import CadastroMotoboy from './components/inicio/CadastroMotoboy';
 import CadastroCliente from './components/inicio/CadastroCliente';
 import Cadastrar from './components/inicio/Cadastrar';
 import Login from './components/inicio/Login';
+import EditarPerfil from'./components/cliente/EditarPerfil';
 import Acompanhamento from './components/cliente/Acompanhamento';
 import HistoricoCliente from './components/cliente/HistoricoCliente';
 import SolicitacaoTransporte from './components/cliente/SolicitacaoTransporte';
 import TelaCliente from './components/cliente/TelaCliente';
-import NotificacoesCliente from './components/cliente/NotificacoesCliente';
 import AceitaCorrridas from './components/motoboy/AceitaCorridas';
 import HistoricoMotoboy from './components/motoboy/HistoricoMotoboy';
 import NotificacoesMotoboy from './components/motoboy/NotificacoesMotoboy';
@@ -41,7 +41,7 @@ function App() {
         <Route path="/historico-cliente" element={<HistoricoCliente />} />
         <Route path="/solicitacao-transporte" element={<SolicitacaoTransporte />} />
         <Route path="/cliente" element={<TelaCliente />} />
-        <Route path="/notificacoes-cliente" element={<NotificacoesCliente />} />
+        <Route path="/perfil" element={<EditarPerfil />} />
         <Route path="/administrador" element={<TelaAdministrador />} />
         <Route path="/gerenciamento-entregas" element={<GerenciamentoEntrega />} />
         <Route path="/editar-parametro" element={<EditarParametro />} />

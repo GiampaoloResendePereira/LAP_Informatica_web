@@ -32,16 +32,16 @@ const TelaCliente = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto"> {/* Alinha os itens à direita */}
               <li className="nav-item">
-                <a className="nav-link" href="/gerenciamento-entregas">Solicitação de Entrega</a>
+                <a className="nav-link" href="/solicitacao-transporte">Solicitação de Frete</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/editar-parametro">Acompanhamento de Entregas</a>
+                <a className="nav-link" href="/Acompanhamento">Acompanhamento de Entregas</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/editar-cadastro-motoboy">Historico de Compras</a>
+                <a className="nav-link" href="/historico-cliente">Historico de Fretes</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/relatorios">Editar Perfil</a>
+                <a className="nav-link" href="/perfil">Editar Perfil</a>
               </li>
             </ul>
           </div>

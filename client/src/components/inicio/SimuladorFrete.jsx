@@ -7,6 +7,7 @@ const SimuladorFrete = () => {
   const [valorFrete, setValorFrete] = useState(null);
   const [valorPorPeso, setValorPorPeso] = useState(null);
   const [erro, setErro] = useState("");
+  const [mensagemSucesso, setMensagemSucesso] = useState("");
 
   // Lista de CEPs válidos para Vitória (exemplo)
   const cepsValidos = [
@@ -21,6 +22,7 @@ const SimuladorFrete = () => {
   const calcularFrete = () => {
     setErro("");
     setValorPorPeso(null); // Resetar valor por peso
+    setMensagemSucesso(""); // Resetar mensagem de sucesso
 
     if (!isCepValido(cepOrigem) || !isCepValido(cepDestino)) {
       setErro("Os CEPs devem ser válidos para a Grande Vitória.");
@@ -46,6 +48,16 @@ const SimuladorFrete = () => {
     const totalFrete = valorPeso;
     setValorFrete(totalFrete);
     setValorPorPeso(valorPeso);
+  };
+
+  const solicitarFrete = () => {
+    if (valorFrete !== null) {
+      // Simulação de solicitação de frete
+      setMensagemSucesso("Frete solicitado com sucesso!");
+      // Aqui você pode adicionar a lógica para enviar os dados para o servidor
+    } else {
+      setErro("Calcule o frete antes de solicitar.");
+    }
   };
 
   return (
@@ -100,6 +112,11 @@ const SimuladorFrete = () => {
       )}
 
       {erro && <div className="erro-mensagem">{erro}</div>}
+      {mensagemSucesso && <div className="sucesso-mensagem">{mensagemSucesso}</div>}
+
+      <button onClick={solicitarFrete} className="btn btn-success" disabled={valorFrete === null}>
+        Solicitar Frete
+      </button>
     </div>
   );
 };

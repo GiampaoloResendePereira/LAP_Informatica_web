@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import './EditarCadastroCliente.css';
 
-
-function EditarCadastroCliente() {
+function EditarPerfil() {
   // Estados para armazenar os valores dos campos
   const [cpfPesquisa, setCpfPesquisa] = useState('');
   const [nome, setNome] = useState('');
@@ -15,7 +13,6 @@ function EditarCadastroCliente() {
 
   // Função simulada para buscar cliente com base no CPF
   const buscarClientePorCpf = (cpf) => {
-    // Aqui você pode substituir essa função pela chamada real à API ou banco de dados para buscar o cliente
     const clienteExemplo = {
       nome: 'João Silva',
       cpf: '12345678901',
@@ -42,27 +39,9 @@ function EditarCadastroCliente() {
     console.log('Dados do cliente:', { nome, cpf, email, telefone, dataNascimento, senha });
   };
 
-  // Função para deletar o cliente
-  const handleDelete = () => {
-    if (cpf) {
-      console.log('Deletando cliente com CPF:', cpf);
-      // Aqui você pode implementar a lógica para deletar o cliente do sistema
-      // Resetar os campos após deletar
-      setNome('');
-      setCpf('');
-      setEmail('');
-      setTelefone('');
-      setDataNascimento('');
-      setSenha('');
-      setConfirmarSenha('');
-    } else {
-      alert('Nenhum cliente selecionado para deletar.');
-    }
-  };
-
   return (
     <div>
-      <h1>Editar Cadastro de Cliente</h1>
+      <h1>Editar Perfil</h1>
 
       {/* Campo de pesquisa por CPF */}
       <div className="form-group">
@@ -167,12 +146,9 @@ function EditarCadastroCliente() {
 
         {/* Botões de Ação */}
         <button type="submit">Salvar</button>
-        <button type="button" onClick={handleDelete} style={{ marginLeft: '10px', backgroundColor: 'red', color: 'white' }}>
-          Deletar
-        </button>
       </form>
     </div>
   );
 }
 
-export default EditarCadastroCliente;
+export default EditarPerfil;
