@@ -10,6 +10,7 @@
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "browserify-zlib": "^0.2.0",
+    "express": "^4.21.1",
     "https-browserify": "^1.0.0",
     "jspdf": "^2.5.2",
     "react": "^18.3.1",
@@ -51,5 +52,10 @@
     "babel-plugin-styled-components": "^2.1.4",
     "customize-cra": "^1.0.0",
     "react-app-rewired": "^2.2.1"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "config-overrides.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
