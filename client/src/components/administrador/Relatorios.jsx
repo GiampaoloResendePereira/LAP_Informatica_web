@@ -1,7 +1,7 @@
 // src/pages/Relatorio.jsx
 import React, { useState } from 'react';
 import { jsPDF } from 'jspdf';
-import './Relatorios.css'; // Importa o CSS para aplicar o estilo
+import '../../global.css'; // Importa o CSS para aplicar o estilo
 
 function Relatorio() {
   const [titulo, setTitulo] = useState('');
@@ -57,7 +57,7 @@ function Relatorio() {
 
   return (
     <div className="container mt-5">
-      <h2>Enviar Relatório</h2>
+      <h2 className="mb-4">Enviar Relatório</h2>
       {feedback && <div className="alert alert-success" role="alert">{feedback}</div>}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">

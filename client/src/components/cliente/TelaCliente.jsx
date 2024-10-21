@@ -1,6 +1,7 @@
-// src/pages/Administrador/TelaAdministrador.jsx
+// src/pages/Administrador/TelaCliente.jsx
 import React from 'react';
-import './TelaCliente.css'; // Importa o CSS para aplicar o estilo
+import { Link } from 'react-router-dom'; // Importa o Link para navegação
+import '../../global.css'; // Importa o CSS para aplicar o estilo
 import logo from '../../assets/img/logo.png'; // Caminho ajustado para a logo
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -11,9 +12,9 @@ const TelaCliente = () => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div className="container-fluid">
           {/* Logo à esquerda */}
-          <a className="navbar-brand" href="/">
+          <Link className="navbar-brand" to="/">
             <img src={logo} alt="Logo" height="50" />
-          </a>
+          </Link>
 
           {/* Botão para mobile */}
           <button
@@ -32,21 +33,27 @@ const TelaCliente = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto"> {/* Alinha os itens à direita */}
               <li className="nav-item">
-                <a className="nav-link" href="/solicitacao-transporte">Solicitação de Frete</a>
+                <Link className="nav-link" to="/solicitacao-transporte">Solicitação de Frete</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/Acompanhamento">Acompanhamento de Entregas</a>
+                <Link className="nav-link" to="/Acompanhamento">Acompanhamento de Entregas</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/historico-cliente">Historico de Fretes</a>
+                <Link className="nav-link" to="/historico-cliente">Histórico de Fretes</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/perfil">Editar Perfil</a>
+                <Link className="nav-link" to="/perfil">Editar Perfil</Link>
               </li>
             </ul>
           </div>
         </div>
       </nav>
+
+      {/* Conteúdo principal pode ser adicionado aqui */}
+      <div className="content mt-5 pt-4">
+        <h1>Bem-vindo à sua área de cliente!</h1>
+        {/* Outros componentes ou informações podem ser adicionados aqui */}
+      </div>
     </div>
   );
 };

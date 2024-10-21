@@ -1,7 +1,7 @@
 // src/pages/GerenciamentoEntrega.jsx
 import React, { useState } from 'react';
 import { Table, Form, Button } from 'react-bootstrap';
-import './GerenciamentoEntrega.css';
+import '../../global.css';
 
 function Gerenciamento() {
   // Estado para armazenar os filtros
@@ -29,7 +29,7 @@ function Gerenciamento() {
   };
 
   return (
-    <div className='Gerenciamento'>
+    <div className="container mt-5">
       <h1>Gerenciamento de Entregas</h1>
 
       {/* Filtros de Pesquisa */}

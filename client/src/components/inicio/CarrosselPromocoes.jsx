@@ -3,7 +3,7 @@ import { Carousel } from 'react-bootstrap';
 import promo1 from '../../assets/img/promo1.png';
 import promo2 from '../../assets/img/promo2.png';
 import promo3 from '../../assets/img/promo3.png';
-import './CarrosselPromocoes.css'; // Importe o CSS
+import '../../global.css'; // Importe o CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const CarrosselPromocoes = () => {

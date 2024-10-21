@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../../global.css';
 
 const SimuladorFrete = () => {
   const [peso, setPeso] = useState(0);
@@ -61,9 +62,9 @@ const SimuladorFrete = () => {
   };
 
   return (
-    <div className="simulador-frete-container">
+    <div class="container">
       <h1>Simulador de Frete</h1>
-      <div className="form-group">
+      <div class="container">
         <label htmlFor="peso">Peso da Mercadoria (Kg):</label>
         <input
           type="number"
@@ -75,7 +76,7 @@ const SimuladorFrete = () => {
         />
       </div>
 
-      <div className="form-group">
+      <div class="container">
         <label htmlFor="cepOrigem">CEP de Origem:</label>
         <input
           type="text"
@@ -87,7 +88,7 @@ const SimuladorFrete = () => {
         />
       </div>
 
-      <div className="form-group">
+      <div class="container">
         <label htmlFor="cepDestino">CEP de Destino:</label>
         <input
           type="text"
@@ -102,7 +103,7 @@ const SimuladorFrete = () => {
       <button onClick={calcularFrete}>Calcular Frete</button>
 
       {valorFrete !== null && (
-        <div className="resultado-frete">
+        <div class="container">
           <h2>Valor do Frete: R$ {valorFrete.toFixed(2)}</h2>
           {valorPorPeso !== null && (
             <p>Valor calculado com base no peso da mercadoria: R$ {valorPorPeso.toFixed(2)}</p>

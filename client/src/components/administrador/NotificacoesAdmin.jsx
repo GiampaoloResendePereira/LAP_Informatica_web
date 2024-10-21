@@ -1,6 +1,6 @@
 // src/pages/NotificacoesAdmin.jsx
 import React, { useState, useEffect } from 'react'; 
-import './NotificacoesAdmin.css'; // Importa o CSS para aplicar o estilo
+import '../../global.css'; // Importa o CSS para aplicar o estilo
 
 function NotificacoesAdmin() {
   const [notificacoes, setNotificacoes] = useState([]);
@@ -24,7 +24,7 @@ function NotificacoesAdmin() {
 
   return (
     <div className="container mt-5">
-      <h1>Notificações</h1>
+      <h1 className="mb-4">Notificações</h1>
       {notificacoes.length === 0 ? (
         <p>Não há notificações no momento.</p>
       ) : (

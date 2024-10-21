@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../../global.css';
 
 
 const CadastroMotoboy = () => {
@@ -54,11 +55,11 @@ const CadastroMotoboy = () => {
   };
 
   return (
-    <div className="cadastro-container">
+    <div class="container">
       <h1>Cadastro de Motoboy</h1>
       <form className="cadastro-form" onSubmit={handleSubmit}>
         {/* Campo Nome */}
-        <div className="form-group">
+        <div class="container">
           <label htmlFor="nome">Nome:</label>
           <input
             type="text"
@@ -70,7 +71,7 @@ const CadastroMotoboy = () => {
         </div>
 
         {/* Campo CPF */}
-        <div className="form-group">
+        <div class="container">
           <label htmlFor="cpf">CPF:</label>
           <input
             type="text"
@@ -83,7 +84,7 @@ const CadastroMotoboy = () => {
         </div>
 
         {/* Campo E-mail */}
-        <div className="form-group">
+        <div class="container">
           <label htmlFor="email">E-mail:</label>
           <input
             type="email"
@@ -95,7 +96,7 @@ const CadastroMotoboy = () => {
         </div>
 
         {/* Campo Telefone */}
-        <div className="form-group">
+        <div class="container">
           <label htmlFor="telefone">Telefone:</label>
           <input
             type="text"
@@ -107,7 +108,7 @@ const CadastroMotoboy = () => {
         </div>
 
         {/* Campo Data de Nascimento */}
-        <div className="form-group">
+        <div class="container">
           <label htmlFor="dataNascimento">Data de Nascimento:</label>
           <input
             type="date"
@@ -118,7 +119,7 @@ const CadastroMotoboy = () => {
         </div>
 
         {/* Campo Placa da Moto */}
-        <div className="form-group">
+        <div class="container">
           <label htmlFor="placaMoto">Placa da Moto:</label>
           <input
             type="text"
@@ -130,7 +131,7 @@ const CadastroMotoboy = () => {
         </div>
 
         {/* Campo Senha */}
-        <div className="form-group">
+        <div class="container">
           <label htmlFor="senha">Senha:</label>
           <input
             type="password"
@@ -142,7 +143,7 @@ const CadastroMotoboy = () => {
         </div>
 
         {/* Campo Confirmar Senha */}
-        <div className="form-group">
+        <div class="container">
           <label htmlFor="confirmarSenha">Confirmar Senha:</label>
           <input
             type="password"
