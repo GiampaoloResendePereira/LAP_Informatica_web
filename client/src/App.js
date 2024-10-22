@@ -23,7 +23,7 @@ import TelaMotoboy from './components/motoboy/TelaMotoboy';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './global.css';
 
-import TesteTela from './components/administrador/teste';
+
 
 
 function App() {
@@ -34,18 +34,15 @@ function App() {
         <Route path="/" element={<TelaInicio />} />
         <Route path="/simulador-frete" element={<SimuladorFrete />} />
         <Route path="/cadastrar-cliente" element={<CadastroCliente />} />
-        <Route path="/cadastrar-motoboy" element={<CadastroMotoboy />} />
-        
+        <Route path="/cadastrar-motoboy" element={<CadastroMotoboy />} />       
         <Route path="/Acompanhamento" element={<Acompanhamento />} />
         <Route path="/historico-cliente" element={<HistoricoCliente />} />
         <Route path="/solicitacao-transporte" element={<SolicitacaoTransporte />} />
         <Route path="/cliente" element={<TelaCliente />} />
         <Route path="/perfil" element={<EditarPerfil />} />
         <Route path="/administrador" element={<TelaAdministrador />} />
-        <Route path="/teste" element={<TesteTela/>} />
         <Route path="/gerenciamento-entregas" element={<GerenciamentoEntrega />} />
-        <Route path="/editar-parametro" element={<EditarParametro />} />
-        
+        <Route path="/editar-parametro" element={<EditarParametro />} />       
         <Route path="/editar-cadastro-motoboy" element={<EditarCadastroMotoboy />} />
         <Route path="/editar-cadastro-cliente" element={<EditarCadastroCliente />} />
         <Route path="/relatorios" element={<Relatorios />} />
