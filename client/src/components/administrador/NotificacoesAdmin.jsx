@@ -24,7 +24,7 @@ function NotificacoesAdmin() {
 
   return (
     <div className="container mt-5">
-      <h1 className="mb-4">Notificações</h1>
+      <h4 className= "estilo" style={{ color: 'white' }}>Notificações</h4>
       {notificacoes.length === 0 ? (
         <p>Não há notificações no momento.</p>
       ) : (

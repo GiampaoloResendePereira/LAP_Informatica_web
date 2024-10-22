@@ -30,7 +30,7 @@ const EditarParametro = () => {
 
   return (
     <div className="container mt-5">
-      <h2>Editar Parâmetros de Cálculo de Frete</h2>
+      <h4 className= "estilo" style={{ color: 'white' }}>Editar Parâmetros de Cálculo de Frete</h4>
       {showSuccess && (
         <Alert variant="success" onClose={() => setShowSuccess(false)} dismissible>
           Parâmetros atualizados com sucesso!
@@ -103,7 +103,7 @@ const EditarParametro = () => {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit" className="mt-4">
+        <Button variant="danger" type="submit" className="mt-4">
           Salvar Alterações
         </Button>
       </Form>

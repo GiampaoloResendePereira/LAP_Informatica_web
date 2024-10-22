@@ -57,7 +57,7 @@ function Relatorio() {
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-4">Enviar Relatório</h2>
+      <h4 className= "estilo" style={{ color: 'white' }}>Enviar Relatório</h4>
       {feedback && <div className="alert alert-success" role="alert">{feedback}</div>}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -105,7 +105,7 @@ function Relatorio() {
             <option value="text">Texto</option>
           </select>
         </div>
-        <button type="submit" className="btn btn-primary">Salvar Relatório</button>
+        <button type="submit" className="btn btn-danger">Salvar Relatório</button>
       </form>
     </div>
   );

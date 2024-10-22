@@ -30,7 +30,7 @@ function Gerenciamento() {
 
   return (
     <div className="container mt-5">
-      <h1>Gerenciamento de Entregas</h1>
+      <h4 className= "estilo" style={{ color: 'white' }}>Gerenciamento de Entregas</h4>
 
       {/* Filtros de Pesquisa */}
       <Form onSubmit={handleFilterSubmit} className="mb-4">
@@ -68,7 +68,7 @@ function Gerenciamento() {
             <option value="concluido">Concluído</option>
             <option value="cancelado">Cancelado</option>
           </Form.Control>
-          <Button variant="primary" type="submit">Pesquisar</Button>
+          <Button variant="danger" type="submit">Pesquisar</Button>
         </div>
       </Form>
 
@@ -95,9 +95,9 @@ function Gerenciamento() {
             <td>20/10/2024</td>
             <td>—</td>
             <td>
-              <Button variant="warning" className="me-2">Editar</Button>
+              <Button variant="danger" className="me-2">Editar</Button>
               <Button variant="danger" className="me-2">Cancelar</Button>
-              <Button variant="success">Concluir</Button>
+              <Button variant="danger">Concluir</Button>
             </td>
           </tr>
           <tr>
@@ -108,9 +108,9 @@ function Gerenciamento() {
             <td>19/10/2024</td>
             <td>—</td>
             <td>
-              <Button variant="warning" className="me-2">Editar</Button>
+              <Button variant="danger" className="me-2">Editar</Button>
               <Button variant="danger" className="me-2">Cancelar</Button>
-              <Button variant="success">Concluir</Button>
+              <Button variant="danger">Concluir</Button>
             </td>
           </tr>
           {/* Continue com mais dados */}

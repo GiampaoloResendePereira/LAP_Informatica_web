@@ -38,7 +38,7 @@ function EditarCadastroMotoboy() {
 
   return (
     <div className="container mt-5">
-      <h1>Editar Cadastro de Motoboy</h1>
+      <h4 className= "estilo" style={{ color: 'white' }}>Editar Cadastro de Motoboy</h4>
 
       {/* Alerta de sucesso */}
       {showAlert && (
@@ -76,7 +76,7 @@ function EditarCadastroMotoboy() {
 
 
       {/* Formulário de edição do cadastro */}
-      <h2>Cadastro de Motoboy</h2>
+      <h4 className= "estilo" style={{ color: 'white' }}>Cadastro de Motoboy</h4>
       <Form onSubmit={handleSubmit} className="cadastro-form">
         
         {/* Campo Nome */}

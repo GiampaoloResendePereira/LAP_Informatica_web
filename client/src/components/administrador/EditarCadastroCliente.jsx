@@ -91,7 +91,7 @@ function EditarCadastroCliente() {
 
   return (
     <div className="container mt-5">
-      <h1>Editar Cadastro de Cliente</h1>
+      <h4 className= "estilo" style={{ color: 'white' }}>Editar Cadastro de Cliente</h4>
 
       {showAlert && <Alert variant={alertVariant}>{alertMessage}</Alert>}
 
@@ -109,7 +109,7 @@ function EditarCadastroCliente() {
       </Button>
       </Form.Group>
 
-      <h2>Cadastro de Cliente</h2>
+      <h4 className= "estilo" style={{ color: 'white' }}>Cadastro de Cliente</h4>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Nome:</Form.Label>
@@ -189,7 +189,7 @@ function EditarCadastroCliente() {
         </Form.Group>
 
         <div className="button-group mt-4">
-          <Button variant="primary" type="submit" style={{ marginRight: '15px' }}>
+          <Button variant="danger" type="submit" style={{ marginRight: '15px' }}>
             Salvar
           </Button>
           <Button variant="danger" onClick={handleDelete}>
