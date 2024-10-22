@@ -17,7 +17,14 @@ body {
     line-height: 1.6;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2 {
+    border: 2px solid #000; /* Cor e espessura da borda */
+    border-radius: 15px;    /* Borda arredondada */
+    padding: 10px;          /* Espaçamento interno */
+    color: white
+  }
+
+h3, h4, h5, h6 {
     margin-bottom: 20px;
     font-weight: 600;
     background-color: #6c757d;

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import TelaAdministrador from './components/administrador/TelaAdministrador';
 import GerenciamentoEntrega from './components/administrador/GerenciamentoEntrega'; 
 import EditarParametro from './components/administrador/EditarParametro';
-
 import EditarCadastroCliente from './components/administrador/EditarCadastroCliente';
 import EditarCadastroMotoboy from './components/administrador/EditarCadastroMotoboy';
 import Relatorios from './components/administrador/Relatorios';
@@ -12,7 +11,6 @@ import TelaInicio from './components/inicio/TelaInicio';
 import SimuladorFrete from './components/inicio/SimuladorFrete';
 import CadastroMotoboy from './components/inicio/CadastroMotoboy';
 import CadastroCliente from './components/inicio/CadastroCliente';
-
 import EditarPerfil from'./components/cliente/EditarPerfil';
 import Acompanhamento from './components/cliente/Acompanhamento';
 import HistoricoCliente from './components/cliente/HistoricoCliente';
@@ -24,6 +22,8 @@ import NotificacoesMotoboy from './components/motoboy/NotificacoesMotoboy';
 import TelaMotoboy from './components/motoboy/TelaMotoboy';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './global.css';
+
+import TesteTela from './components/administrador/teste';
 
 
 function App() {
@@ -42,6 +42,7 @@ function App() {
         <Route path="/cliente" element={<TelaCliente />} />
         <Route path="/perfil" element={<EditarPerfil />} />
         <Route path="/administrador" element={<TelaAdministrador />} />
+        <Route path="/teste" element={<TesteTela/>} />
         <Route path="/gerenciamento-entregas" element={<GerenciamentoEntrega />} />
         <Route path="/editar-parametro" element={<EditarParametro />} />
         

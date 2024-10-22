@@ -1,8 +1,10 @@
+// Importações de módulos e estilos
 import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import '../../global.css';
 
 function EditarCadastroMotoboy() {
+  // Gerenciamento de estado para os campos do formulário
   const [nome, setNome] = useState('');
   const [cpf, setCpf] = useState('');
   const [email, setEmail] = useState('');
@@ -18,7 +20,7 @@ function EditarCadastroMotoboy() {
   // Função de envio do formulário
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aqui você pode implementar a lógica de edição do cadastro
+    // Lógica de edição do cadastro
     console.log('Cadastro enviado', { nome, cpf, email, telefone, dataNascimento, placaMoto, senha });
     setShowAlert(true);
   };
@@ -31,48 +33,52 @@ function EditarCadastroMotoboy() {
   // Função de deletar cadastro
   const handleDelete = () => {
     console.log('Deletando cadastro de motoboy com CPF:', cpf);
-    // Aqui você pode implementar a lógica de deletar o motoboy do sistema
+    // Lógica de deletar o motoboy do sistema
   };
 
   return (
     <div className="container mt-5">
       <h1>Editar Cadastro de Motoboy</h1>
 
+      {/* Alerta de sucesso */}
       {showAlert && (
         <Alert variant="success" onClose={() => setShowAlert(false)} dismissible>
           Cadastro atualizado com sucesso!
         </Alert>
       )}
 
-      <div className="form-group mb-3">
-        <label htmlFor="filtroCpf">Pesquisar por CPF:</label>
-        <input
+      {/* Campos de filtro para pesquisa */}
+      <Form.Group controlId="filtroCpf" className="mb-3">
+        <Form.Label>Pesquisar por CPF:</Form.Label>
+        <Form.Control
           type="text"
-          id="filtroCpf"
           value={filtroCpf}
           onChange={(e) => setFiltroCpf(e.target.value)}
           placeholder="Digite o CPF"
           maxLength="11"
+          aria-label="Filtro de CPF"
         />
-      </div>
+      </Form.Group>
 
-      <div className="form-group mb-3">
-        <label htmlFor="filtroPlaca">Pesquisar por Placa da Moto:</label>
-        <input
+      <Form.Group controlId="filtroPlaca" className="mb-3">
+        <Form.Label>Pesquisar por Placa da Moto:</Form.Label>
+        <Form.Control
           type="text"
-          id="filtroPlaca"
           value={filtroPlaca}
           onChange={(e) => setFiltroPlaca(e.target.value)}
           placeholder="Digite a placa da moto"
+          aria-label="Filtro de placa de moto"
         />
-      </div>
-
-      <Button variant="danger" onClick={handleSearch} style={{ marginBottom: '20px' }}>
+        <Button variant="danger" onClick={handleSearch} className="mb-4" >
         Pesquisar
       </Button>
+      </Form.Group>
 
+
+      {/* Formulário de edição do cadastro */}
       <h2>Cadastro de Motoboy</h2>
-      <Form className="cadastro-form" onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} className="cadastro-form">
+        
         {/* Campo Nome */}
         <Form.Group controlId="nome">
           <Form.Label>Nome:</Form.Label>
@@ -81,6 +87,8 @@ function EditarCadastroMotoboy() {
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             placeholder="Digite o nome completo"
+            required
+            aria-label="Nome completo"
           />
         </Form.Group>
 
@@ -93,6 +101,8 @@ function EditarCadastroMotoboy() {
             onChange={(e) => setCpf(e.target.value)}
             placeholder="Digite o CPF"
             maxLength="11"
+            required
+            aria-label="CPF"
           />
         </Form.Group>
 
@@ -104,6 +114,8 @@ function EditarCadastroMotoboy() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Digite o e-mail"
+            required
+            aria-label="E-mail"
           />
         </Form.Group>
 
@@ -115,6 +127,8 @@ function EditarCadastroMotoboy() {
             value={telefone}
             onChange={(e) => setTelefone(e.target.value)}
             placeholder="Digite o telefone"
+            required
+            aria-label="Telefone"
           />
         </Form.Group>
 
@@ -125,6 +139,8 @@ function EditarCadastroMotoboy() {
             type="date"
             value={dataNascimento}
             onChange={(e) => setDataNascimento(e.target.value)}
+            required
+            aria-label="Data de nascimento"
           />
         </Form.Group>
 
@@ -136,6 +152,8 @@ function EditarCadastroMotoboy() {
             value={placaMoto}
             onChange={(e) => setPlacaMoto(e.target.value)}
             placeholder="Digite a placa da moto"
+            required
+            aria-label="Placa da moto"
           />
         </Form.Group>
 
@@ -147,6 +165,8 @@ function EditarCadastroMotoboy() {
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
             placeholder="Digite a senha"
+            required
+            aria-label="Senha"
           />
         </Form.Group>
 
@@ -158,16 +178,21 @@ function EditarCadastroMotoboy() {
             value={confirmarSenha}
             onChange={(e) => setConfirmarSenha(e.target.value)}
             placeholder="Confirme a senha"
+            required
+            aria-label="Confirmar senha"
           />
         </Form.Group>
 
-        {/* Botões de Ação */}
-        <Button variant="primary" type="submit" style={{ marginRight: '10px' }}>
-          Salvar
-        </Button>
-        <Button variant="danger" onClick={handleDelete}>
-          Deletar
-        </Button>
+        {/* Botões de ação */}
+        <div className="button-group mt-4">
+        <Button variant="danger" type="submit" style={{ marginRight: '15px' }}>
+  Salvar
+</Button>
+<Button variant="danger" onClick={handleDelete}>
+  Deletar
+</Button>
+
+        </div>
       </Form>
     </div>
   );

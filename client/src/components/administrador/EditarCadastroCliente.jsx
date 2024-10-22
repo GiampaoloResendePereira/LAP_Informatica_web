@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { Form, Button, Alert } from 'react-bootstrap';
 import '../../global.css';
 
 function EditarCadastroCliente() {
-  // Estados para armazenar os valores dos campos
   const [cpfPesquisa, setCpfPesquisa] = useState('');
   const [nome, setNome] = useState('');
   const [cpf, setCpf] = useState('');
@@ -11,10 +11,11 @@ function EditarCadastroCliente() {
   const [dataNascimento, setDataNascimento] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertVariant, setAlertVariant] = useState('danger');
 
-  // Função simulada para buscar cliente com base no CPF
   const buscarClientePorCpf = (cpf) => {
-    // Aqui você pode substituir essa função pela chamada real à API ou banco de dados para buscar o cliente
     const clienteExemplo = {
       nome: 'João Silva',
       cpf: '12345678901',
@@ -29,49 +30,55 @@ function EditarCadastroCliente() {
       setEmail(clienteExemplo.email);
       setTelefone(clienteExemplo.telefone);
       setDataNascimento(clienteExemplo.dataNascimento);
+      setShowAlert(true);
+      setAlertMessage('Cliente encontrado com sucesso!');
+      setAlertVariant('success');
     } else {
-      alert('Cliente não encontrado!');
+      setShowAlert(true);
+      setAlertMessage('Cliente não encontrado!');
+      setAlertVariant('danger');
     }
   };
 
-  // Função para validar o formulário
   const validateForm = () => {
     if (!nome || !email || !telefone || !dataNascimento) {
-      alert('Por favor, preencha todos os campos obrigatórios.');
+      setAlertMessage('Por favor, preencha todos os campos obrigatórios.');
+      setAlertVariant('danger');
+      setShowAlert(true);
       return false;
     }
     if (senha !== confirmarSenha) {
-      alert('As senhas não coincidem.');
+      setAlertMessage('As senhas não coincidem.');
+      setAlertVariant('danger');
+      setShowAlert(true);
       return false;
     }
     return true;
   };
 
-  // Função para lidar com a submissão do formulário de cadastro
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Valida o formulário antes de prosseguir
     if (!validateForm()) return;
 
-    // Lógica para salvar/editar o cliente vai aqui
     console.log('Dados do cliente:', { nome, cpf, email, telefone, dataNascimento, senha });
   };
 
-  // Função para deletar o cliente
   const handleDelete = () => {
     if (cpf) {
       if (window.confirm(`Tem certeza que deseja deletar o cliente com CPF: ${cpf}?`)) {
         console.log('Deletando cliente com CPF:', cpf);
-        // Aqui você pode implementar a lógica para deletar o cliente do sistema
         resetFields();
+        setShowAlert(true);
+        setAlertMessage('Cliente deletado com sucesso.');
+        setAlertVariant('success');
       }
     } else {
-      alert('Nenhum cliente selecionado para deletar.');
+      setShowAlert(true);
+      setAlertMessage('Nenhum cliente selecionado para deletar.');
+      setAlertVariant('danger');
     }
   };
 
-  // Função para resetar os campos
   const resetFields = () => {
     setNome('');
     setCpf('');
@@ -84,141 +91,112 @@ function EditarCadastroCliente() {
 
   return (
     <div className="container mt-5">
-      <div>
-        <h1>Editar Cadastro de Cliente</h1>
+      <h1>Editar Cadastro de Cliente</h1>
 
-        {/* Campo de pesquisa por CPF */}
-        <div className="container">
-          <label htmlFor="cpfPesquisa">Pesquisar por CPF:</label>
-          <input
+      {showAlert && <Alert variant={alertVariant}>{alertMessage}</Alert>}
+
+      <Form.Group>
+        <Form.Label>Pesquisar por CPF:</Form.Label>
+        <Form.Control
+          type="text"
+          value={cpfPesquisa}
+          onChange={(e) => setCpfPesquisa(e.target.value)}
+          placeholder="Digite o CPF"
+          maxLength="11"
+        />
+        <Button variant="danger" onClick={buscarClientePorCpf} className="mb-4" >
+        Pesquisar
+      </Button>
+      </Form.Group>
+
+      <h2>Cadastro de Cliente</h2>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>Nome:</Form.Label>
+          <Form.Control
             type="text"
-            id="cpfPesquisa"
-            value={cpfPesquisa}
-            onChange={(e) => setCpfPesquisa(e.target.value)}
-            placeholder="Digite o CPF para buscar"
-            maxLength="11"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            placeholder="Digite o nome completo"
+            required
           />
-          <hr />
+        </Form.Group>
 
-          <button
-            type="button"
-            onClick={() => buscarClientePorCpf(cpfPesquisa)}
-            style={{ marginRight: 'auto', backgroundColor: 'red', color: 'white' }}
-          >
-            Pesquisar
-          </button>
-        </div>
-      </div>
+        <Form.Group>
+          <Form.Label>CPF:</Form.Label>
+          <Form.Control
+            type="text"
+            value={cpf}
+            onChange={(e) => setCpf(e.target.value)}
+            placeholder="Digite o CPF"
+            maxLength="11"
+            readOnly
+          />
+        </Form.Group>
 
-      <div>
-        <h1>Cadastro de Cliente</h1>
+        <Form.Group>
+          <Form.Label>E-mail:</Form.Label>
+          <Form.Control
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Digite o e-mail"
+            required
+          />
+        </Form.Group>
 
-        {/* Formulário de Cadastro */}
-        <form className="cadastro-form" onSubmit={handleSubmit}>
-          {/* Campo Nome */}
-          <div className="container">
-            <label htmlFor="nome">Nome:</label>
-            <input
-              type="text"
-              id="nome"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              placeholder="Digite o nome completo"
-              required
-            />
-          </div>
+        <Form.Group>
+          <Form.Label>Telefone:</Form.Label>
+          <Form.Control
+            type="text"
+            value={telefone}
+            onChange={(e) => setTelefone(e.target.value)}
+            placeholder="Digite o telefone"
+            required
+          />
+        </Form.Group>
 
-          {/* Campo CPF */}
-          <div className="container">
-            <label htmlFor="cpf">CPF:</label>
-            <input
-              type="text"
-              id="cpf"
-              value={cpf}
-              onChange={(e) => setCpf(e.target.value)}
-              placeholder="Digite o CPF"
-              maxLength="11"
-              readOnly
-            />
-          </div>
+        <Form.Group>
+          <Form.Label>Data de Nascimento:</Form.Label>
+          <Form.Control
+            type="date"
+            value={dataNascimento}
+            onChange={(e) => setDataNascimento(e.target.value)}
+            required
+          />
+        </Form.Group>
 
-          {/* Campo E-mail */}
-          <div className="container">
-            <label htmlFor="email">E-mail:</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Digite o e-mail"
-              required
-            />
-          </div>
+        <Form.Group>
+          <Form.Label>Senha:</Form.Label>
+          <Form.Control
+            type="password"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            placeholder="Digite a senha"
+            required
+          />
+        </Form.Group>
 
-          {/* Campo Telefone */}
-          <div className="container">
-            <label htmlFor="telefone">Telefone:</label>
-            <input
-              type="text"
-              id="telefone"
-              value={telefone}
-              onChange={(e) => setTelefone(e.target.value)}
-              placeholder="Digite o telefone"
-              required
-            />
-          </div>
+        <Form.Group>
+          <Form.Label>Confirmar Senha:</Form.Label>
+          <Form.Control
+            type="password"
+            value={confirmarSenha}
+            onChange={(e) => setConfirmarSenha(e.target.value)}
+            placeholder="Confirme a senha"
+            required
+          />
+        </Form.Group>
 
-          {/* Campo Data de Nascimento */}
-          <div className="container">
-            <label htmlFor="dataNascimento">Data de Nascimento:</label>
-            <input
-              type="date"
-              id="dataNascimento"
-              value={dataNascimento}
-              onChange={(e) => setDataNascimento(e.target.value)}
-              required
-            />
-          </div>
-
-          {/* Campo Senha */}
-          <div className="container">
-            <label htmlFor="senha">Senha:</label>
-            <input
-              type="password"
-              id="senha"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              placeholder="Digite a senha"
-              required
-            />
-          </div>
-
-          {/* Campo Confirmar Senha */}
-          <div className="container">
-            <label htmlFor="confirmarSenha">Confirmar Senha:</label>
-            <input
-              type="password"
-              id="confirmarSenha"
-              value={confirmarSenha}
-              onChange={(e) => setConfirmarSenha(e.target.value)}
-              placeholder="Confirme a senha"
-              required
-            />
-          </div>
-
-          <hr />
-
-          {/* Botões de Ação */}
-          <button type="submit">Salvar</button>
-          <button
-            type="button"
-            onClick={handleDelete}
-            style={{ marginLeft: '10px', backgroundColor: 'red', color: 'white' }}
-          >
+        <div className="button-group mt-4">
+          <Button variant="primary" type="submit" style={{ marginRight: '15px' }}>
+            Salvar
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
             Deletar
-          </button>
-        </form>
-      </div>
+          </Button>
+        </div>
+      </Form>
     </div>
   );
 }
