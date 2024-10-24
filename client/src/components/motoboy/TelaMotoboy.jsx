@@ -2,7 +2,7 @@ import React, { useState } from 'react'; // Importando useState
 import { Link } from 'react-router-dom'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../../assets/img/logo.png'; 
-import '../../global.css';
+import '../../'
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import AceitaCorrridas from '../motoboy/AceitaCorridas';
 import HistoricoMotoboy from '../motoboy/HistoricoMotoboy';
