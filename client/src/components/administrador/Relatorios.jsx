@@ -1,7 +1,6 @@
-// src/pages/Relatorio.jsx
 import React, { useState } from 'react';
 import { jsPDF } from 'jspdf';
-import '../../global.css'; // Importa o CSS para aplicar o estilo
+import '../../styles/Relatorios.css'; // Importa o CSS global
 
 function Relatorio() {
   const [titulo, setTitulo] = useState('');
@@ -24,9 +23,7 @@ function Relatorio() {
       gerarTexto();
     }
 
-    setFeedback('Relatório salvo na área de trabalho com sucesso!');
-
-    // Limpar campos do formulário
+    setFeedback('Relatório salvo com sucesso!');
     resetForm();
   };
 
@@ -51,30 +48,28 @@ function Relatorio() {
     setTitulo('');
     setDescricao('');
     setData('');
-    setFormato('pdf'); // Resetar para o formato padrão
-    setFeedback(''); // Limpa feedback após o envio
+    setFormato('pdf');
+    setFeedback('');
   };
 
   return (
-    <div className="container mt-5">
-      <h4 className= "estilo" style={{ color: 'white' }}>Enviar Relatório</h4>
-      {feedback && <div className="alert alert-success" role="alert">{feedback}</div>}
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
+    <div className="relatorio-container">
+      <h4 className="relatorio-title">Enviar Relatório</h4>
+      {feedback && <div className="feedback-message">{feedback}</div>}
+      <form onSubmit={handleSubmit} className="relatorio-form">
+        <div className="form-group">
           <label htmlFor="titulo" className="form-label">Título do Relatório:</label>
           <input
             type="text"
-            className="form-control"
             id="titulo"
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
             required
           />
         </div>
-        <div className="mb-3">
+        <div className="form-group">
           <label htmlFor="descricao" className="form-label">Descrição:</label>
           <textarea
-            className="form-control"
             id="descricao"
             rows="4"
             value={descricao}
@@ -82,21 +77,19 @@ function Relatorio() {
             required
           />
         </div>
-        <div className="mb-3">
+        <div className="form-group">
           <label htmlFor="data" className="form-label">Data:</label>
           <input
             type="date"
-            className="form-control"
             id="data"
             value={data}
             onChange={(e) => setData(e.target.value)}
             required
           />
         </div>
-        <div className="mb-3">
+        <div className="form-group">
           <label htmlFor="formato" className="form-label">Formato do Relatório:</label>
           <select
-            className="form-select"
             id="formato"
             value={formato}
             onChange={(e) => setFormato(e.target.value)}
@@ -105,7 +98,7 @@ function Relatorio() {
             <option value="text">Texto</option>
           </select>
         </div>
-        <button type="submit" className="btn btn-danger">Salvar Relatório</button>
+        <button type="submit" className="submit-button">Salvar Relatório</button>
       </form>
     </div>
   );

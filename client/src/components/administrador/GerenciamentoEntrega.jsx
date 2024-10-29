@@ -1,10 +1,8 @@
 // src/pages/GerenciamentoEntrega.jsx
 import React, { useState } from 'react';
-import { Table, Form, Button } from 'react-bootstrap';
-import '../../global.css';
+import '../../styles/GerenciamentoEntregas.css';
 
 function Gerenciamento() {
-  // Estado para armazenar os filtros
   const [filters, setFilters] = useState({
     codigo: '',
     cliente: '',
@@ -12,7 +10,6 @@ function Gerenciamento() {
     status: '',
   });
 
-  // Função para atualizar os filtros
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({
@@ -21,59 +18,58 @@ function Gerenciamento() {
     });
   };
 
-  // Função para aplicar o filtro (aqui pode adicionar lógica para buscar os dados filtrados)
   const handleFilterSubmit = (e) => {
     e.preventDefault();
-    // Lógica para filtrar os dados vai aqui
     console.log('Filtros aplicados:', filters);
   };
 
   return (
-    <div className="container mt-5">
-      <h4 className= "estilo" style={{ color: 'white' }}>Gerenciamento de Entregas</h4>
+    <div className="container">
+      <h4 className="title">Gerenciamento de Entregas</h4>
 
       {/* Filtros de Pesquisa */}
-      <Form onSubmit={handleFilterSubmit} className="mb-4">
-        <div className="d-flex gap-2">
-          <Form.Control
-            type="text"
-            placeholder="Pesquisar Código"
-            name="codigo"
-            value={filters.codigo}
-            onChange={handleFilterChange}
-          />
-          <Form.Control
-            type="text"
-            placeholder="Pesquisar Cliente"
-            name="cliente"
-            value={filters.cliente}
-            onChange={handleFilterChange}
-          />
-          <Form.Control
-            type="text"
-            placeholder="Pesquisar Motoboy"
-            name="motoboy"
-            value={filters.motoboy}
-            onChange={handleFilterChange}
-          />
-          <Form.Control
-            as="select"
-            name="status"
-            value={filters.status}
-            onChange={handleFilterChange}
-          >
-            <option value="">Status</option>
-            <option value="pendente">Pendente</option>
-            <option value="em_andamento">Em andamento</option>
-            <option value="concluido">Concluído</option>
-            <option value="cancelado">Cancelado</option>
-          </Form.Control>
-          <Button variant="danger" type="submit">Pesquisar</Button>
-        </div>
-      </Form>
+      <form onSubmit={handleFilterSubmit} className="filter-form">
+        <input
+          type="text"
+          placeholder="Pesquisar Código"
+          name="codigo"
+          value={filters.codigo}
+          onChange={handleFilterChange}
+          className="filter-input"
+        />
+        <input
+          type="text"
+          placeholder="Pesquisar Cliente"
+          name="cliente"
+          value={filters.cliente}
+          onChange={handleFilterChange}
+          className="filter-input"
+        />
+        <input
+          type="text"
+          placeholder="Pesquisar Motoboy"
+          name="motoboy"
+          value={filters.motoboy}
+          onChange={handleFilterChange}
+          className="filter-input"
+        />
+        <select
+          name="status"
+          value={filters.status}
+          onChange={handleFilterChange}
+          className="filter-select"
+        >
+          <option value="">Status</option>
+          <option value="pendente">Pendente</option>
+          <option value="em_andamento">Em andamento</option>
+          <option value="concluido">Concluído</option>
+          <option value="cancelado">Cancelado</option>
+        </select>
+        <button type="submit" className="filter-button">Pesquisar</button>
+      </form>
 
       {/* Tabela de Entregas */}
-      <Table striped bordered hover>
+      <table className="delivery-table">
         <thead>
           <tr>
             <th>Código</th>
@@ -95,9 +91,7 @@ function Gerenciamento() {
             <td>20/10/2024</td>
             <td>—</td>
             <td>
-              <Button variant="danger" className="me-2">Editar</Button>
-              <Button variant="danger" className="me-2">Cancelar</Button>
-              <Button variant="danger">Concluir</Button>
+              <button className="action-button">Detalhes</button>
             </td>
           </tr>
           <tr>
@@ -108,14 +102,11 @@ function Gerenciamento() {
             <td>19/10/2024</td>
             <td>—</td>
             <td>
-              <Button variant="danger" className="me-2">Editar</Button>
-              <Button variant="danger" className="me-2">Cancelar</Button>
-              <Button variant="danger">Concluir</Button>
+              <button className="action-button">Detalhes</button>
             </td>
           </tr>
-          {/* Continue com mais dados */}
         </tbody>
-      </Table>
+      </table>
     </div>
   );
 }
