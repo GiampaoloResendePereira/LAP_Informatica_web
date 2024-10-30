@@ -1,31 +1,33 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './global.css';
+import './styles/global.css';
 
 
-import TelaAdministrador from './components/administrador/TelaAdministrador';
-import GerenciamentoEntrega from './components/administrador/GerenciamentoEntrega'; 
-import EditarParametro from './components/administrador/EditarParametro';
-import Relatorios from './components/administrador/Relatorios';
-import CadastroMotoboy from './components/administrador/CadastroMotoboy';
+
+import TelaAdministrador from './components/Administrador/TelaAdministrador';
+import GerenciamentoEntrega from './components/Administrador/GerenciamentoEntrega'; 
+import EditarParametro from './components/Administrador/EditarParametro';
+import Relatorios from './components/Administrador/Relatorios';
 
 
-import TelaInicio from './components/inicio/TelaInicio';
-import SimuladorFrete from './components/inicio/SimuladorFrete';
-import CadastroCliente from './components/inicio/CadastroCliente';
+import TelaInicio from './components/Inicio/TelaInicio';
+import SimuladorFrete from './components/Inicio/SimuladorFrete';
+import CadastroCliente from './components/Inicio/CadastroCliente';
 
 
-import Acompanhamento from './components/cliente/Acompanhamento';
-import HistoricoCliente from './components/cliente/HistoricoCliente';
-import SolicitacaoTransporte from './components/cliente/SolicitacaoTransporte';
-import TelaCliente from './components/cliente/TelaCliente';
+import Acompanhamento from './components/Cliente/Acompanhamento';
+import HistoricoCliente from './components/Cliente/HistoricoCliente';
+import SolicitacaoTransporte from './components/Cliente/SolicitacaoTransporte';
+import TelaCliente from './components/Cliente/TelaCliente';
 
 
-import AceitaCorrridas from './components/motoboy/AceitaCorridas';
-import HistoricoMotoboy from './components/motoboy/HistoricoMotoboy';
-import NotificacoesMotoboy from './components/motoboy/NotificacoesMotoboy';
-import TelaMotoboy from './components/motoboy/TelaMotoboy';
+import AceitaCorrridas from './components/Motoboy/AceitaCorridas';
+import HistoricoMotoboy from './components/Motoboy/HistoricoMotoboy';
+import NotificacoesMotoboy from './components/Motoboy/NotificacoesMotoboy';
+import TelaMotoboy from './components/Motoboy/TelaMotoboy';
+import CadastroMotoboy from './components/Motoboy/CadastroMotoboy';
+
 
 
 function App() {
