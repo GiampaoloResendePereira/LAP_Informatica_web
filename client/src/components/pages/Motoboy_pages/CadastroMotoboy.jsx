@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import '../../styles/CadastroMotoboy.css';
+import './CadastroMotoboy.css';
 
 function CadastroMotoboy({ titulo, txtBtn, handleSubmit, id, tipo }) {
   const [nome, setNome] = useState("");

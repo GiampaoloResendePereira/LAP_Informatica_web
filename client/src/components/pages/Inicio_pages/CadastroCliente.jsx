@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../../global.css';
+import './CadastroCliente.css';
 
 const CadastroCliente = () => {
   // Estados para armazenar os valores dos campos de entrada
