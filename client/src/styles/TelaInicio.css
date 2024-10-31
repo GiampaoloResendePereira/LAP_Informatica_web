@@ -1,0 +1,10 @@
+.navbar {
+  display: flex;
+  justify-content: center; /* Centraliza a navbar */
+}
+
+.nav-link {
+  margin: 0 15px; /* Espaço horizontal entre os links */
+  text-decoration: none;
+  color: white;
+}
