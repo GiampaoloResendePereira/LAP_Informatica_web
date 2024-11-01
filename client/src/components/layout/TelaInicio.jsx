@@ -16,7 +16,7 @@ function TelaInicio() {
           <Navbar.Brand href=""></Navbar.Brand>
           <Nav className="me-auto">
             <img src={logo} alt="Logo" className="login-logo" height="50" />
-            <Nav.Link href="#home">Login</Nav.Link>
+            <Nav.Link href="/login">Login</Nav.Link>
             <Nav.Link href="/cadastrar-cliente">Cadastrar</Nav.Link>
           </Nav>
           <div className="align-right">

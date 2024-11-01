@@ -6,31 +6,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
-//import TelaAdministrador from './components/layout/TelaAdministrador';
-//import GerenciamentoEntrega from './components/pages/Administrador_pages/GerenciamentoEntrega'; 
-//import EditarParametro from './components/pages/Administrador_pages/EditarParametro';
-//import Relatorios from './components/pages/Administrador_pages/Relatorios';
+import TelaAdministrador from './components/layout/TelaAdministrador';
+import GerenciamentoEntrega from './components/pages/GerenciamentoEntrega'; 
+import EditarParametro from './components/pages/EditarParametro';
 
 
 import TelaInicio from './components/layout/TelaInicio';
-//import CarrosselPromocoes from './components/layout/Inicio_layout/CarrosselPromocoes';
-//import SimuladorFrete from './components/pages/Inicio_pages/SimuladorFrete';
 import CadastroCliente from './components/pages/CadastroCliente';
-//import Login from './components/pages/Inicio_pages/Login';
-//import LoginUsuario from './components/pages/Inicio_pages/LoginUsuario';
+import Login from './components/pages/Login';
+import LoginUsuario from './components/pages/LoginUsuario';
+import CarrosselPromocoes from './components/layout/CarrosselPromocoes';
+import SimuladorFrete from './components/pages/SimuladorFrete';
 
 
-//import Acompanhamento from './components/pages/Cliente_pages/Acompanhamento';
-//import HistoricoCliente from './components/pages/Cliente_pages/HistoricoCliente';
-//import SolicitacaoTransporte from './components/pages/Cliente_pages/SolicitacaoTransporte';
-//import TelaCliente from './components/layout/Cliente_layout/TelaCliente';
+
+import Acompanhamento from './components/pages/Acompanhamento';
+import SolicitacaoTransporte from './components/pages/SolicitacaoTransporte';
+import TelaCliente from './components/layout/TelaCliente';
 
 
-//import AceitaCorrridas from './components/pages/Motoboy_pages/AceitaCorridas';
-//import HistoricoMotoboy from './components/pages/Motoboy_pages/HistoricoMotoboy';
-//import NotificacoesMotoboy from './components/pages/Motoboy_pages/NotificacoesMotoboy';
-//import CadastroMotoboy from './components/pages/Motoboy_pages/CadastroMotoboy';
-//import TelaMotoboy from './components/layout/Motoboy_layout/TelaMotoboy';
+import AceitaCorridas from './components/pages/AceitaCorridas';
+import CadastroMotoboy from './components/pages/CadastroMotoboy';
+import TelaMotoboy from './components/layout/TelaMotoboy';
 
 
 
@@ -39,8 +36,27 @@ function App() {
     <Router>
       <Routes>
         {/* Rotas */}
-        <Route path="/" element={<TelaInicio />} />
+        <Route path="/inicio" element={<TelaInicio />} />
+        <Route path="/simulador-frete" element={<SimuladorFrete />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/cadastrar-cliente" element={<CadastroCliente />} />
+        <Route path="/" element={<LoginUsuario />} />
+        <Route path="/Carrossel" element={< CarrosselPromocoes/>} />
+
+
+        <Route path="/cliente" element={<TelaCliente />} />
+        <Route path="/Acompanhamento" element={<Acompanhamento />} />
+        <Route path="/solicitacao-transporte" element={<SolicitacaoTransporte />} />
+
+
+        <Route path="/administrador" element={<TelaAdministrador />} />
+        <Route path="/gerenciamento-entregas" element={<GerenciamentoEntrega />} />
+        <Route path="/editar-parametro" element={<EditarParametro />} />  
+        
+             
+        <Route path="/aceita-corridas" element={<AceitaCorridas />} />        
+        <Route path="/motoboy" element={<TelaMotoboy />} />
+        <Route path="/cadastrar-motoboy" element={<CadastroMotoboy />} />
       </Routes>
     </Router>
   );
