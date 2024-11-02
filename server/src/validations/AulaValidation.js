@@ -1,11 +1,11 @@
 const params = [
-    'data',
-    'data_hora_inicio',
-    'data_hora_fim',
-    'turma',
-    'instrutor',
-    'unidade_curricular',
-    'ambiente',
+    'nome',
+    'cpf',
+    'email',
+    'telefone',
+    'dataNascimento',
+    'senha',
+    'chave',
   ];
   
   export function isNullOrEmpty(value) {
