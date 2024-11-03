@@ -1,27 +1,32 @@
-// backend/server.js
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const clienteRoutes = require('./routes/cliente');
-require('dotenv').config();
+// server.js
+const express = require("express");
+const cors = require("cors");
+const { calcularFreteHandler } = require("./controllers/CalculoFreteController");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
-// Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-// Conexão ao MongoDB
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Conectado ao MongoDB'))
-  .catch(err => console.error('Erro ao conectar ao MongoDB', err));
-
-// Rotas
-app.use('/clientes', clienteRoutes);
+// Rota para o cálculo de frete
+app.post("/calcular-frete", calcularFreteHandler);
 
 // Iniciar o servidor
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
+
+// index.js ou app.js
+const express = require("express");
+const bodyParser = require("body-parser");
+const clienteController = require("./controllers/CadastroClienteController");
+
+const app = express();
+app.use(bodyParser.json());
+
+app.post("/api/clientes", clienteController.cadastrarCliente);
+
+app.listen(3000, () => {
+  console.log("Servidor rodando na porta 3000");
 });
