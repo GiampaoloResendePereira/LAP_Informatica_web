@@ -3,17 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../../assets/img/logo.png'; 
 import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap'; // Adicione NavDropdown aqui
-import { useNavigate } from "react-router-dom"; // Importa o hook para navegação
 
 
-const TelaCliente = () => {
+function TelaCliente(){
 
-  const navigate = useNavigate(); // Hook para navegação entre as rotas
-
-  // Funções de navegação para cada tela
-  const handleAdminLogin = () => {
-    navigate("/"); // Redireciona para a tela do Administrador
-  };
   
   return (
     <div>
@@ -31,7 +24,7 @@ const TelaCliente = () => {
             <Nav.Link href="/Acompanhamento">Acompanhamento do frete</Nav.Link>
             
             <div className="align-right">
-          <button className="sair-button" onClick={handleAdminLogin}>
+          <button className="sair-button">
             Sair
           </button>
         </div>
