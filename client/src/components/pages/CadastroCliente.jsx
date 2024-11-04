@@ -2,6 +2,9 @@
 import React, { useState } from "react";
 import { Form, Button, Alert, Container } from "react-bootstrap";
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../styles/global.css'; // Importando o CSS global
+
 
 function CadastroCliente() {
   const [cpf, setCpf] = useState("");

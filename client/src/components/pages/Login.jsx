@@ -5,6 +5,7 @@ import adminImg from '../../assets/icon/administrador.png';
 import clienteImg from '../../assets/icon/cliente.png';
 import motoboyImg from '../../assets/icon/motoboy.png';
 
+
 const Login = () => {
   const navigate = useNavigate(); // Hook para navegação entre as rotas
 

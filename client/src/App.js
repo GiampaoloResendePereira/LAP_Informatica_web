@@ -23,7 +23,7 @@ function App() {
         <Route path="/" element={<LoginUsuario />} />
 
         <Route path="/cliente" element={<TelaCliente />} />       
-        <Route path="/solicitacao-transporte" element={<SolicitacaoTransporte />} />
+        <Route path="/solicitacao-frete" element={<SolicitacaoTransporte />} />
         <Route path="/calculo-frete" element={<CalculoFrete />} />
 
         <Route path="/administrador" element={<TelaAdministrador />} />

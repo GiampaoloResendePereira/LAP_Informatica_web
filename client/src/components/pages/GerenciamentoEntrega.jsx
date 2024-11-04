@@ -1,6 +1,8 @@
 // src/pages/GerenciamentoEntrega.jsx
 import React, { useState } from 'react';
 import { Table, Form, Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../styles/global.css'; // Importando o CSS global
 
 function Gerenciamento() {
   // Estado para armazenar os filtros
@@ -29,7 +31,7 @@ function Gerenciamento() {
 
   return (
     <div className="container mt-5">
-      <h4 className= "estilo" style={{ color: 'white' }}>Gerenciamento de Entregas</h4>
+      <h4 className="text-center">Gerenciamento de Entregas</h4>
 
       {/* Filtros de Pesquisa */}
       <Form onSubmit={handleFilterSubmit} className="mb-4">

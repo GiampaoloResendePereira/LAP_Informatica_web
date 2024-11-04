@@ -1,6 +1,8 @@
 // src/pages/EditarParametro.jsx
 import React, { useState } from 'react'; 
 import { Form, Button, Alert } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../styles/global.css'; // Importando o CSS global
 
 const EditarParametro = () => {
   const [parametros, setParametros] = useState({

@@ -1,146 +1,113 @@
-// CalculoFrete.jsx
-import React, { useState } from "react";
-import { Form, Button, Alert, Container, Row, Col } from 'react-bootstrap';
+// src/pages/CalculoFrete.jsx
+import React, { useState, useEffect } from "react";
+import { Button, Form, Card, Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"; // Para navegação entre páginas
+import '../../styles/global.css'; // Importando o CSS global
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function CalculoFrete() {
+const CalculoFrete = () => {
+  const [cepsVitoria, setCepsVitoria] = useState({});
   const [cepOrigem, setCepOrigem] = useState("");
   const [cepDestino, setCepDestino] = useState("");
   const [peso, setPeso] = useState("");
-  const [altura, setAltura] = useState("");
-  const [diametro, setDiametro] = useState("");
-  const [largura, setLargura] = useState("");
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [valorFrete, setValorFrete] = useState(null);
+  const [precoFrete, setPrecoFrete] = useState(null);
+  const [solicitarFrete, setSolicitarFrete] = useState(false);
+  const navigate = useNavigate();
 
-  // Função para validar CEP de Vitória
-  const isCepVitoria = (cep) => {
-    return cep.startsWith("290"); // CEPs de Vitória começam com "290"
-  };
+  // Função para carregar os CEPs do arquivo JSON
+  useEffect(() => {
+    const loadCeps = async () => {
+      const response = await fetch('/ceps.json');
+      const data = await response.json();
+      setCepsVitoria(data);
+    };
+    
+    loadCeps();
+  }, []);
 
-  // Função de cálculo do frete
-  const calcularFrete = () => {
-    // Validação de CEP
-    if (!isCepVitoria(cepOrigem) || !isCepVitoria(cepDestino)) {
-      alert("O cálculo de frete está disponível apenas para a cidade de Vitória - ES.");
+  const calcularFrete = (e) => {
+    e.preventDefault();
+    
+    // Validar se os CEPs são válidos
+    if (!cepsVitoria[cepOrigem] || !cepsVitoria[cepDestino]) {
+      alert("Por favor, insira CEPs válidos de Vitória, ES.");
       return;
     }
 
-    // Cálculo básico de frete (exemplo: peso * 0.5 + volume * 0.2)
-    const pesoFloat = parseFloat(peso);
-    const alturaFloat = parseFloat(altura);
-    const diametroFloat = parseFloat(diametro);
-    const larguraFloat = parseFloat(largura);
+    // Calcular a distância entre os CEPs (simulado)
+    const distancia = Math.abs(cepsVitoria[cepDestino].distancia - cepsVitoria[cepOrigem].distancia);
 
-    const volume = alturaFloat * diametroFloat * larguraFloat;
-    const valor = pesoFloat * 0.5 + volume * 0.2;
+    // Simulação de cálculo do frete
+    const taxaPorKg = 5; // Exemplo de taxa por kg
+    const taxaPorDistancia = 2; // Exemplo de taxa por km
 
-    setValorFrete(valor.toFixed(2));
-    setShowSuccess(true);
+    // Cálculo do custo do frete com base no peso e distância
+    const custoFrete = (peso * taxaPorKg) + (distancia * taxaPorDistancia);
+    setPrecoFrete(custoFrete.toFixed(2));
+    setSolicitarFrete(false); // Resetar a opção de solicitar
+  };
+
+  const handleSolicitar = () => {
+    // Redirecionar para a tela de solicitação de frete
+    navigate("/solicitacao-frete");
   };
 
   return (
-    <Container className="p-4">
-      <h2>Calcular Frete</h2>
+    <div className="container mt-5">
+      <Card className="calculo-frete-form shadow p-4" style={{ width: '400px' }}>
+        <h4 className="text-center">Cálculo de Frete</h4>
+        <Form onSubmit={calcularFrete}>
+          <Form.Group className="mb-3">
+            <Form.Control
+              type="text"
+              placeholder="CEP de Origem"
+              value={cepOrigem}
+              onChange={(e) => setCepOrigem(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Control
+              type="text"
+              placeholder="CEP de Destino"
+              value={cepDestino}
+              onChange={(e) => setCepDestino(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Control
+              type="number"
+              placeholder="Peso (kg)"
+              value={peso}
+              onChange={(e) => setPeso(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit" className="w-100">
+            Calcular Frete
+          </Button>
+        </Form>
 
-      {/* Alerta de sucesso */}
-      {showSuccess && (
-        <Alert variant="success" onClose={() => setShowSuccess(false)} dismissible>
-          Cálculo feito com sucesso! Valor do frete: R$ {valorFrete}
-        </Alert>
-      )}
-
-      <Form>
-        <Row className="mb-3">
-          {/* CEP de Origem */}
-          <Col>
-            <Form.Group controlId="cepOrigem">
-              <Form.Label>CEP de Origem:</Form.Label>
-              <Form.Control
-                type="text"
-                value={cepOrigem}
-                onChange={(e) => setCepOrigem(e.target.value)}
-                placeholder="Digite o CEP de origem"
-              />
-            </Form.Group>
-          </Col>
-
-          {/* CEP de Destino */}
-          <Col>
-            <Form.Group controlId="cepDestino">
-              <Form.Label>CEP de Destino:</Form.Label>
-              <Form.Control
-                type="text"
-                value={cepDestino}
-                onChange={(e) => setCepDestino(e.target.value)}
-                placeholder="Digite o CEP de destino"
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-
-        <Row className="mb-3">
-          {/* Peso */}
-          <Col md={4}>
-            <Form.Group controlId="peso">
-              <Form.Label>Peso (kg):</Form.Label>
-              <Form.Control
-                type="text"
-                value={peso}
-                onChange={(e) => setPeso(e.target.value)}
-                placeholder="Digite o peso"
-              />
-            </Form.Group>
-          </Col>
-
-          {/* Altura */}
-          <Col md={4}>
-            <Form.Group controlId="altura">
-              <Form.Label>Altura (cm):</Form.Label>
-              <Form.Control
-                type="text"
-                value={altura}
-                onChange={(e) => setAltura(e.target.value)}
-                placeholder="Digite a altura"
-              />
-            </Form.Group>
-          </Col>
-
-          {/* Diâmetro */}
-          <Col md={4}>
-            <Form.Group controlId="diametro">
-              <Form.Label>Diâmetro (cm):</Form.Label>
-              <Form.Control
-                type="text"
-                value={diametro}
-                onChange={(e) => setDiametro(e.target.value)}
-                placeholder="Digite o diâmetro"
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-
-        <Row className="mb-3">
-          {/* Largura */}
-          <Col md={4}>
-            <Form.Group controlId="largura">
-              <Form.Label>Largura (cm):</Form.Label>
-              <Form.Control
-                type="text"
-                value={largura}
-                onChange={(e) => setLargura(e.target.value)}
-                placeholder="Digite a largura"
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-
-        {/* Botão Calcular */}
-        <Button variant="primary" onClick={calcularFrete}>
-          Calcular
-        </Button>
-      </Form>
-    </Container>
+        {precoFrete !== null && (
+          <Card className="mt-4 p-3 text-center">
+            <Alert variant="info">
+              O preço do frete é: R$ {precoFrete}
+            </Alert>
+            <p>Deseja solicitar o frete?</p>
+            <div className="d-flex justify-content-between">
+              <Button variant="success" onClick={handleSolicitar}>
+                Sim
+              </Button>
+              <Button variant="danger" onClick={() => setPrecoFrete(null)}>
+                Não
+              </Button>
+            </div>
+          </Card>
+        )}
+      </Card>
+    </div>
   );
-}
+};
 
 export default CalculoFrete;

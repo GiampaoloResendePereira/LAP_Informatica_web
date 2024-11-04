@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../../assets/img/logo.png'; 
 import React from 'react';
 import GerenciamentoEntrega from '../pages/GerenciamentoEntrega';
 import { Navbar, Container, Nav } from 'react-bootstrap'; // Adicione NavDropdown aqui
 import { useNavigate } from "react-router-dom"; // Importa o hook para navegação
+import '../../styles/global.css'; // Importando o CSS global
 
 
 const TelaAdministrador = () => {
@@ -24,9 +24,9 @@ const TelaAdministrador = () => {
       {/* Barra de navegação principal */}
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Link className="navbar-brand" to="/">
+          
             <img src={logo} alt="Logo" height="50" />
-          </Link>
+          
           <Nav className="me-auto">
             <Nav.Link href="/editar-parametro">Editar Parametro de Frete</Nav.Link>
 
