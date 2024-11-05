@@ -1,58 +1,55 @@
-// src/pages/Login.jsx
-import React from "react";
-import { useNavigate } from "react-router-dom"; // Importa o hook para navegação
-import adminImg from '../../assets/icon/administrador.png';
-import clienteImg from '../../assets/icon/cliente.png';
-import motoboyImg from '../../assets/icon/motoboy.png';
-
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Atualizando para useNavigate
 
 const Login = () => {
-  const navigate = useNavigate(); // Hook para navegação entre as rotas
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const navigate = useNavigate(); // Hook para redirecionamento
 
-  // Funções de navegação para cada tela
-  const handleAdminLogin = () => {
-    navigate("/login-usuario"); // Redireciona para a tela do Administrador
-  };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Adicione a lógica de autenticação aqui
+        console.log('Login:', { email, senha });
+    };
 
-  const handleClientLogin = () => {
-    navigate("/login-usuario"); // Redireciona para a tela do Cliente
-  };
+    const handleCadastro = () => {
+        navigate('/cadastrar-cliente'); // Usando useNavigate para redirecionar
+    };
 
-  const handleMotoboyLogin = () => {
-    navigate("/login-usuario"); // Redireciona para a tela do Motoboy
-  };
+    return (
+        <div className="login-container">
+            <h2>Login</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Senha:</label>
+                    <input
+                        type="password"
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit">Entrar</button>
 
-  return (
-    <div className="login-container">
-      <h4 className= "estilo" style={{ color: 'white' }}>Escolha o Tipo de Login</h4>
-      <div className="button-group">
-        
-        {/* Botão para login de Administrador */}
-        <div className="login-option">
-          <img src={adminImg} alt="Administrador" className="login-icon" />
-          <button className="login-button" onClick={handleAdminLogin}>
-            Administrador
-          </button>
+                <button type="button" onClick={handleCadastro} style={{ marginTop: '10px' }}>
+                    Cadastrar
+                </button>
+                <div>
+                    <a href="/recuperacao-senha">Esqueceu a senha?</a>
+                </div>
+                
+            </form>
         </div>
-
-        {/* Botão para login de Cliente */}
-        <div className="login-option">
-          <img src={clienteImg} alt="Cliente" className="login-icon" />
-          <button className="login-button" onClick={handleClientLogin}>
-            Cliente
-          </button>
-        </div>
-
-        {/* Botão para login de Motoboy */}
-        <div className="login-option">
-          <img src={motoboyImg} alt="Motoboy" className="login-icon" />
-          <button className="login-button" onClick={handleMotoboyLogin}>
-            Motoboy
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Login;

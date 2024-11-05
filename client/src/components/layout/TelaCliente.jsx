@@ -2,8 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../../assets/img/logo.png'; 
 import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap'; // Adicione NavDropdown aqui
-import '../../styles/global.css'; // Importando o CSS global
-import CalculoFrete from '../pages/CalculoFrete';
+import '../../styles/TelaCliente.css'; // Importando o CSS global
+import SolicitacaoFrete from '../pages/SolicitacaoFrete';
 
 
 function TelaCliente(){
@@ -32,7 +32,7 @@ function TelaCliente(){
         </Container>
       </Navbar>
 
-      <CalculoFrete/>
+      <SolicitacaoFrete/>
 
       
     </div>

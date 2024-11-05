@@ -7,9 +7,10 @@ import GerenciamentoEntrega from './components/pages/GerenciamentoEntrega';
 import EditarParametro from './components/pages/EditarParametro';
 
 import CadastroCliente from './components/pages/CadastroCliente';
-import LoginUsuario from './components/pages/LoginUsuario';
+import Login from './components/pages/Login';
+import RecuperacaoSenha from './components/pages/RecuperacaoSenha';
 
-import SolicitacaoTransporte from './components/pages/SolicitacaoTransporte';
+import SolicitacaoFrete from './components/pages/SolicitacaoFrete';
 import TelaCliente from './components/layout/TelaCliente';
 import CalculoFrete from './components/pages/CalculoFrete'
 
@@ -20,10 +21,11 @@ function App() {
         {/* Rotas */}
            
         <Route path="/cadastrar-cliente" element={<CadastroCliente />} />
-        <Route path="/" element={<LoginUsuario />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/recuperacao-senha" element={<RecuperacaoSenha />} />
 
         <Route path="/cliente" element={<TelaCliente />} />       
-        <Route path="/solicitacao-frete" element={<SolicitacaoTransporte />} />
+        <Route path="/solicitacao-frete" element={<SolicitacaoFrete />} />
         <Route path="/calculo-frete" element={<CalculoFrete />} />
 
         <Route path="/administrador" element={<TelaAdministrador />} />

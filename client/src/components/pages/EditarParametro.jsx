@@ -1,116 +1,113 @@
-// src/pages/EditarParametro.jsx
-import React, { useState } from 'react'; 
-import { Form, Button, Alert } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../styles/global.css'; // Importando o CSS global
+import React, { useState } from 'react';
 
-const EditarParametro = () => {
-  const [parametros, setParametros] = useState({
-    pesoMenos1Kg: 3.00,
-    peso1a3Kg: 5.00,
-    peso3a8Kg: 9.00,
-    peso8a12Kg: 12.00,
-    pesoAcima12Kg: "Não é possível transportar",
-    precoPorKm: 0.50,
-  });
-  
-  const [showSuccess, setShowSuccess] = useState(false);
+function EditarParametro() {
+  // Estados para armazenar os valores de cada faixa de peso
+  const [valorMenos1Kg, setValorMenos1Kg] = useState(3.00);
+  const [valor1a3Kg, setValor1a3Kg] = useState(5.00);
+  const [valor3a8Kg, setValor3a8Kg] = useState(9.00);
+  const [valor8a12Kg, setValor8a12Kg] = useState(12.00);
+  const [valorPorKm, setValorPorKm] = useState(0.50);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setParametros({ ...parametros, [name]: value });
+  // Função de validação para os valores de peso
+  const validarValoresPeso = () => {
+    if (
+      valorMenos1Kg >= valor1a3Kg ||
+      valor1a3Kg >= valor3a8Kg ||
+      valor3a8Kg >= valor8a12Kg
+    ) {
+      alert("Valores devem ser crescentes conforme o peso aumenta.");
+      return false;
+    }
+    return true;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Aqui você pode salvar os parâmetros, por exemplo, em um banco de dados ou em um estado global
-    console.log('Parâmetros atualizados:', parametros);
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 2000);
+  // Função para salvar alterações
+  const salvarAlteracoes = () => {
+    if (validarValoresPeso()) {
+      // Aqui, você poderia enviar os dados para a API ou atualizar o estado global
+      alert("Parâmetros salvos com sucesso!");
+    }
+  };
+
+  // Função para cancelar as alterações e voltar para a tela anterior
+  const cancelarEdicao = () => {
+    // Lógica para navegar para a tela anterior
+    alert("Edição cancelada.");
   };
 
   return (
-    <div className="container mt-5">
-      <h4 className= "estilo" style={{ color: 'white' }}>Editar Parâmetros de Cálculo de Frete</h4>
-      {showSuccess && (
-        <Alert variant="success" onClose={() => setShowSuccess(false)} dismissible>
-          Parâmetros atualizados com sucesso!
-        </Alert>
-      )}
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="pesoMenos1Kg">
-          <Form.Label>Peso menor que 1Kg (R$)</Form.Label>
-          <Form.Control
+    <div style={{ padding: '20px' }}>
+      <h2>Editar Parâmetros de Frete</h2>
+
+      {/* Tabela de Valor por Peso */}
+      <div style={{ marginBottom: '20px' }}>
+        <h3>Tabela de Valor por Peso</h3>
+        <div>
+          <label>Menos de 1Kg: R$</label>
+          <input
             type="number"
-            name="pesoMenos1Kg"
-            value={parametros.pesoMenos1Kg}
-            onChange={handleChange}
             step="0.01"
+            value={valorMenos1Kg}
+            onChange={(e) => setValorMenos1Kg(parseFloat(e.target.value))}
+            min="0"
           />
-        </Form.Group>
-
-        <Form.Group controlId="peso1a3Kg" className="mt-3">
-          <Form.Label>Peso entre 1Kg e 3Kg (R$)</Form.Label>
-          <Form.Control
+        </div>
+        <div>
+          <label>Entre 1Kg e 3Kg: R$</label>
+          <input
             type="number"
-            name="peso1a3Kg"
-            value={parametros.peso1a3Kg}
-            onChange={handleChange}
             step="0.01"
+            value={valor1a3Kg}
+            onChange={(e) => setValor1a3Kg(parseFloat(e.target.value))}
+            min={valorMenos1Kg}
           />
-        </Form.Group>
-
-        <Form.Group controlId="peso3a8Kg" className="mt-3">
-          <Form.Label>Peso entre 3Kg e 8Kg (R$)</Form.Label>
-          <Form.Control
+        </div>
+        <div>
+          <label>Entre 3Kg e 8Kg: R$</label>
+          <input
             type="number"
-            name="peso3a8Kg"
-            value={parametros.peso3a8Kg}
-            onChange={handleChange}
             step="0.01"
+            value={valor3a8Kg}
+            onChange={(e) => setValor3a8Kg(parseFloat(e.target.value))}
+            min={valor1a3Kg}
           />
-        </Form.Group>
-
-        <Form.Group controlId="peso8a12Kg" className="mt-3">
-          <Form.Label>Peso entre 8Kg e 12Kg (R$)</Form.Label>
-          <Form.Control
+        </div>
+        <div>
+          <label>Entre 8Kg e 12Kg: R$</label>
+          <input
             type="number"
-            name="peso8a12Kg"
-            value={parametros.peso8a12Kg}
-            onChange={handleChange}
             step="0.01"
+            value={valor8a12Kg}
+            onChange={(e) => setValor8a12Kg(parseFloat(e.target.value))}
+            min={valor3a8Kg}
           />
-        </Form.Group>
+        </div>
+        <div>
+          <label>Acima de 12Kg: </label>
+          <span>Não é possível transportar</span>
+        </div>
+      </div>
 
-        <Form.Group controlId="pesoAcima12Kg" className="mt-3">
-          <Form.Label>Peso acima de 12Kg</Form.Label>
-          <Form.Control
-            type="text"
-            name="pesoAcima12Kg"
-            value={parametros.pesoAcima12Kg}
-            onChange={handleChange}
-            readOnly
-          />
-        </Form.Group>
+      {/* Tabela de Preço por Km Rodado */}
+      <div style={{ marginBottom: '20px' }}>
+        <h3>Tabela de Preço por Km Rodado</h3>
+        <label>1 Km rodado: R$</label>
+        <input
+          type="number"
+          step="0.01"
+          value={valorPorKm}
+          onChange={(e) => setValorPorKm(parseFloat(e.target.value))}
+          min="0"
+        />
+      </div>
 
-        <Form.Group controlId="precoPorKm" className="mt-3">
-          <Form.Label>Preço por Km (R$)</Form.Label>
-          <Form.Control
-            type="number"
-            name="precoPorKm"
-            value={parametros.precoPorKm}
-            onChange={handleChange}
-            step="0.01"
-          />
-        </Form.Group>
-
-        <Button variant="danger" type="submit" className="mt-4">
-          Salvar Alterações
-        </Button>
-      </Form>
-      <br />
+      {/* Botões de Ação */}
+      <div>
+        <button onClick={salvarAlteracoes} style={{ marginRight: '10px' }}>Salvar</button>
+        <button onClick={cancelarEdicao}>Cancelar</button>
+      </div>
     </div>
   );
-};
+}
 
 export default EditarParametro;

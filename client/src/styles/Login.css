@@ -1,0 +1,53 @@
+/* styles.css */
+body {
+  background-color: #f5f5f5; /* Cinza claro */
+  font-family: Arial, sans-serif;
+}
+
+.login-container, .cadastro-container {
+  width: 300px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+}
+
+form div {
+  margin-bottom: 15px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: red; /* Botão vermelho */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: darkred; /* Cor do botão ao passar o mouse */
+}
+
+a {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  color: blue; /* Cor do link */
+  text-decoration: none;
+}
