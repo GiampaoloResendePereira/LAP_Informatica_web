@@ -38,9 +38,9 @@ const Login = () => {
                         required
                     />
                 </div>
-                <button type="submit">Entrar</button>
+                <button className="btn btn-danger mt-2">Entrar</button>
 
-                <button type="button" onClick={handleCadastro} style={{ marginTop: '10px' }}>
+                <button className="btn btn-danger ms-2" onClick={handleCadastro} style={{ marginTop: '10px' }}>
                     Cadastrar
                 </button>
                 <div>

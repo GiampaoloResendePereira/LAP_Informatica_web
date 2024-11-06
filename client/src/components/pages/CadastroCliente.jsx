@@ -24,7 +24,7 @@ const CadastroCliente = () => {
     };
 
     return (
-        <div className="cadastro-container">
+        <div className="cadastro-container container justify-content-center col-sm-12 col-md-6 col-lg-3">
             <h2>Cadastro de Cliente</h2>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -90,8 +90,8 @@ const CadastroCliente = () => {
                         required
                     />
                 </div>
-                <button type="submit">Cadastrar</button>
-                <button type="button" onClick={handleCancel}>Cancelar</button>
+                <button className="btn btn-danger ms-2">Cadastrar</button>
+                <button className="btn btn-danger ms-2" onClick={handleCancel}>Cancelar</button>
             </form>
         </div>
     );

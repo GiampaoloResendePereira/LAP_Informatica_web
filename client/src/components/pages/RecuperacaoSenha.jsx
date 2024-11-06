@@ -22,7 +22,7 @@ const RecuperacaoSenha = () => {
                         required
                     />
                 </div>
-                <button type="submit">Enviar Link de Recuperação</button>
+                <button className="btn btn-danger ms-2">Enviar Link de Recuperação</button>
             </form>
         </div>
     );

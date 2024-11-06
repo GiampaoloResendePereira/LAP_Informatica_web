@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../../styles/EditarParametro.css'
 
 function EditarParametro() {
   // Estados para armazenar os valores de cada faixa de peso
@@ -36,11 +37,11 @@ function EditarParametro() {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Editar Parâmetros de Frete</h2>
+    <div className="container justify-content-center col-sm-12 col-md-6 col-lg-3" style={{ padding: '20px' }}>
+      <h2 >Editar Parâmetros de Frete</h2>
 
       {/* Tabela de Valor por Peso */}
-      <div style={{ marginBottom: '20px' }}>
+      <div class="div-cinza" style={{ marginBottom: '20px' }}>
         <h3>Tabela de Valor por Peso</h3>
         <div>
           <label>Menos de 1Kg: R$</label>
@@ -89,7 +90,7 @@ function EditarParametro() {
       </div>
 
       {/* Tabela de Preço por Km Rodado */}
-      <div style={{ marginBottom: '20px' }}>
+      <div class="div-cinza" style={{ marginBottom: '20px' }}>
         <h3>Tabela de Preço por Km Rodado</h3>
         <label>1 Km rodado: R$</label>
         <input
