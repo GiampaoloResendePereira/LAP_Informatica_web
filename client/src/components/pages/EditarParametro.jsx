@@ -37,7 +37,7 @@ function EditarParametro() {
   };
 
   return (
-    <div className="container justify-content-center col-sm-12 col-md-6 col-lg-3" style={{ padding: '20px' }}>
+    <div style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
       <h2 >Editar Parâmetros de Frete</h2>
 
       {/* Tabela de Valor por Peso */}

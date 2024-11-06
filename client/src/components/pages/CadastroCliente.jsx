@@ -24,10 +24,10 @@ const CadastroCliente = () => {
     };
 
     return (
-        <div className="cadastro-container container justify-content-center col-sm-12 col-md-6 col-lg-3">
+        <div style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
             <h2>Cadastro de Cliente</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div >
                     <label>Nome:</label>
                     <input
                         type="text"
