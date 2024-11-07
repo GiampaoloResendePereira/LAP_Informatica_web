@@ -11,12 +11,37 @@ const CadastroCliente = () => {
     const [dataNascimento, setDataNascimento] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Lógica para cadastro do cliente
-        console.log('Cadastro:', { nome, sobrenome, cpf, telefone, email, senha, dataNascimento });
-        // Redireciona após o cadastro
-        navigate('/');
+
+        const clienteData = {
+            nome,
+            sobrenome,
+            cpf,
+            telefone,
+            email,
+            senha,
+            dataNascimento
+        };
+
+        try {
+            const response = await fetch('http://localhost:5000/cadastrar-cliente', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(clienteData),
+            });
+
+            if (response.ok) {
+                console.log('Cadastro realizado com sucesso');
+                navigate('/'); // Redireciona após o cadastro
+            } else {
+                console.error('Erro no cadastro');
+            }
+        } catch (error) {
+            console.error('Erro na conexão com o servidor:', error);
+        }
     };
 
     const handleCancel = () => {
@@ -27,7 +52,7 @@ const CadastroCliente = () => {
         <div style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
             <h2>Cadastro de Cliente</h2>
             <form onSubmit={handleSubmit}>
-                <div >
+                <div>
                     <label>Nome:</label>
                     <input
                         type="text"
@@ -90,8 +115,8 @@ const CadastroCliente = () => {
                         required
                     />
                 </div>
-                <button className="btn btn-danger ms-2">Cadastrar</button>
-                <button className="btn btn-danger ms-2" onClick={handleCancel}>Cancelar</button>
+                <button type="submit" className="btn btn-danger ms-2">Cadastrar</button>
+                <button type="button" className="btn btn-danger ms-2" onClick={handleCancel}>Cancelar</button>
             </form>
         </div>
     );

@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
 
+// Função para calcular a distância entre dois CEPs usando uma API externa
+const calcularDistancia = (cepOrigem, cepDestino) => {
+  // Aqui você pode integrar com uma API externa como ViaCEP ou Google Maps para calcular a distância
+  // Para simplicidade, vamos assumir uma distância fixa entre os CEPs de 10 km
+  return 10; // Exemplo de distância entre os CEPs em quilômetros
+};
+
 function SolicitacaoFrete() {
   // Estados para os campos iniciais
   const [cepOrigem, setCepOrigem] = useState('');
@@ -14,23 +21,57 @@ function SolicitacaoFrete() {
   const [confirmandoFrete, setConfirmandoFrete] = useState(false);
   const [solicitacaoEnviada, setSolicitacaoEnviada] = useState(false);
 
-  // Função para calcular frete
+  // Função para calcular o frete
   const calcularFrete = () => {
-    // Aqui você incluiria a lógica para calcular o valor do frete
-    // e validar os campos como CEPs, dimensões e peso.
-    if (cepOrigem && cepDestino && largura && altura && comprimento && peso) {
-      setPrecoFrete(150); // Exemplo de valor calculado
-      setConfirmandoFrete(true);
-    } else {
-      alert('Preencha todos os campos para calcular o frete.');
+    // Verificar se os CEPs são válidos da Grande Vitória
+    if (!validarCep(cepOrigem) || !validarCep(cepDestino)) {
+      alert('Os CEPs devem ser da Grande Vitória (ES).');
+      return;
     }
+
+    // Validar os campos
+    if (!cepOrigem || !cepDestino || !largura || !altura || !comprimento || !peso) {
+      alert('Preencha todos os campos para calcular o frete.');
+      return;
+    }
+
+    // Calcular o volume do pacote (em cm³)
+    const volumePacote = largura * altura * comprimento;
+
+    // Definir taxas para cálculo
+    const taxaBase = 10; // Taxa fixa
+    const taxaPeso = 5; // Taxa por kg
+    const taxaVolume = 0.002; // Taxa por cm³ (exemplo: R$ 2 a cada 1000 cm³)
+    const taxaDistancia = 0.10; // Taxa por quilômetro
+
+    // Calcular a distância entre os CEPs (exemplo fixo de 10km, substituir com a API de distâncias)
+    const distancia = calcularDistancia(cepOrigem, cepDestino);
+
+    // Cálculos
+    const custoPeso = peso * taxaPeso;
+    const custoVolume = volumePacote * taxaVolume;
+    const custoDistancia = distancia * taxaDistancia;
+
+    // Calcular o preço total do frete
+    const precoTotalFrete = taxaBase + custoPeso + custoVolume + custoDistancia;
+
+    // Exibir preço
+    setPrecoFrete(precoTotalFrete);
+    setConfirmandoFrete(true);
   };
 
   // Função para confirmar solicitação de frete
   const confirmarFrete = () => {
-    // Aqui você pode adicionar lógica para enviar os dados
+    // Lógica para confirmar e enviar a solicitação
     setSolicitacaoEnviada(true);
     setConfirmandoFrete(false);
+  };
+
+  // Função para validar CEPs da Grande Vitória (ES)
+  const validarCep = (cep) => {
+    const cepNumerico = cep.replace(/\D/g, '');
+    const regexGrandeVitoria = /^(29[0-9]{3}|291[0-9]{3}|292[0-9]{3}|293[0-9]{3})$/;
+    return regexGrandeVitoria.test(cepNumerico);
   };
 
   return (
@@ -49,7 +90,6 @@ function SolicitacaoFrete() {
         </div>
         <div>
           <h4>Tamanho e peso do pacote</h4>
-          <p>O pacote pode ter até 30 kg e até 100 cm em cada lado. A soma dos lados não deve ultrapassar 200 cm.</p>
           <label>Largura (cm):</label>
           <input type="number" value={largura} onChange={(e) => setLargura(e.target.value)} />
           <label>Altura (cm):</label>
@@ -65,7 +105,7 @@ function SolicitacaoFrete() {
       {/* Resultado do Cálculo do Frete */}
       {precoFrete && confirmandoFrete && (
         <div style={{ backgroundColor: 'red', color: 'white', padding: '20px', marginTop: '20px' }}>
-          <p>Preço do Frete: R$ {precoFrete}</p>
+          <p>Preço do Frete: R$ {precoFrete.toFixed(2)}</p>
           <p>Deseja solicitar frete?</p>
           <button onClick={confirmarFrete}>Sim, Solicitar Frete</button>
         </div>
@@ -75,53 +115,7 @@ function SolicitacaoFrete() {
       {solicitacaoEnviada && (
         <div style={{ marginTop: '20px' }}>
           <h3>Dados do Remetente</h3>
-          <label>Logradouro:</label>
-          <input type="text" />
-          <label>Bairro:</label>
-          <input type="text" />
-          <label>Número (opcional):</label>
-          <input type="text" />
-          <label>Complemento (opcional):</label>
-          <input type="text" />
-          <label>Nome do Remetente:</label>
-          <input type="text" />
-          <label>Celular:</label>
-          <input type="text" />
-          <label>CPF ou CNPJ:</label>
-          <input type="text" />
-          <label>Email:</label>
-          <input type="email" />
-
-          <h3>Dados do Destinatário</h3>
-          <label>Logradouro:</label>
-          <input type="text" />
-          <label>Bairro:</label>
-          <input type="text" />
-          <label>Número (opcional):</label>
-          <input type="text" />
-          <label>Complemento (opcional):</label>
-          <input type="text" />
-          <label>Instruções (opcional):</label>
-          <input type="text" />
-          <label>Nome do Destinatário:</label>
-          <input type="text" />
-          <label>Celular:</label>
-          <input type="text" />
-          <label>CPF ou CNPJ:</label>
-          <input type="text" />
-
-          <h4>Tamanho e Peso do Pacote</h4>
-          <p>O pacote pode ter até 30 kg e até 100 cm em cada lado. A soma dos lados não deve ultrapassar 200 cm.</p>
-          <label>Largura (cm):</label>
-          <input type="number" value={largura} readOnly />
-          <label>Altura (cm):</label>
-          <input type="number" value={altura} readOnly />
-          <label>Comprimento (cm):</label>
-          <input type="number" value={comprimento} readOnly />
-          <label>Peso (kg):</label>
-          <input type="number" value={peso} readOnly />
-
-          <h4>Valor do Frete: R$ {precoFrete}</h4>
+          {/* Dados do Remetente */}
           <button>Confirmar Frete</button>
           <button>Imprimir para Motoboy</button>
         </div>
