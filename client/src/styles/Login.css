@@ -1,53 +1,18 @@
 /* styles.css */
 body {
-  background-color: #f5f5f5; /* Cinza claro */
+  background: linear-gradient(to right, rgb(97, 96, 96), rgb(255, 255, 255)); /* Degradê do preto para o vermelho */
   font-family: Arial, sans-serif;
-}
-
-.login-container, .cadastro-container {
-  width: 300px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  text-align: center;
-}
-
-form div {
-  margin-bottom: 15px;
-}
-
-input[type="email"],
-input[type="password"],
-input[type="text"] {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: red; /* Botão vermelho */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: darkred; /* Cor do botão ao passar o mouse */
+  color: white; /* Cor do texto para contraste */
 }
 
 a {
   display: block;
   text-align: center;
   margin-top: 10px;
-  color: blue; /* Cor do link */
-  text-decoration: none;
+  color: black; /* Cor do link preta */
+  text-decoration: none; /* Remove o sublinhado */
+}
+
+a:hover {
+  color: rgb(0, 0, 0); /* Cor do link ao passar o mouse, se desejar */
 }

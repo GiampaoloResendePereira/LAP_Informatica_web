@@ -37,11 +37,11 @@ function EditarParametro() {
   };
 
   return (
-    <div style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
+    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto',  }}>
       <h2 >Editar Parâmetros de Frete</h2>
 
       {/* Tabela de Valor por Peso */}
-      <div class="div-cinza" style={{ marginBottom: '20px' }}>
+      <div class="div-cinza" style={{ marginBottom: '20px', backgroundColor: 'black', color: 'white' }}>
         <h3>Tabela de Valor por Peso</h3>
         <div>
           <label>Menos de 1Kg: R$</label>
@@ -90,7 +90,7 @@ function EditarParametro() {
       </div>
 
       {/* Tabela de Preço por Km Rodado */}
-      <div class="div-cinza" style={{ marginBottom: '20px' }}>
+      <div class="div-cinza" style={{ marginBottom: '20px', backgroundColor: 'black', color: 'white' }}>
         <h3>Tabela de Preço por Km Rodado</h3>
         <label>1 Km rodado: R$</label>
         <input

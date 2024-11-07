@@ -1,0 +1,14 @@
+.sair-button {
+    width: 50px; /* Ajusta a largura do botão (pode ser alterado conforme necessário) */
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #ffffff; /* cor de fundo do botão */
+    color: #000000; /* cor do texto do botão */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute; /* Torna o botão posicionado de forma absoluta */
+    top: 10px; /* A 10px do topo da tela ou contêiner */
+    right: 10px; /* A 10px da borda direita da tela ou contêiner */
+  }

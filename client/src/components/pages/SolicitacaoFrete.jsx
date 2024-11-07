@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-
-// Função para calcular a distância entre dois CEPs usando uma API externa
-const calcularDistancia = (cepOrigem, cepDestino) => {
-  // Aqui você pode integrar com uma API externa como ViaCEP ou Google Maps para calcular a distância
-  // Para simplicidade, vamos assumir uma distância fixa entre os CEPs de 10 km
-  return 10; // Exemplo de distância entre os CEPs em quilômetros
-};
+import '../../styles/SolicitacaoFrete.css';
 
 function SolicitacaoFrete() {
   // Estados para os campos iniciais
@@ -20,76 +14,113 @@ function SolicitacaoFrete() {
   const [precoFrete, setPrecoFrete] = useState(null);
   const [confirmandoFrete, setConfirmandoFrete] = useState(false);
   const [solicitacaoEnviada, setSolicitacaoEnviada] = useState(false);
+  const [erroCep, setErroCep] = useState('');
+  const [erroPeso, setErroPeso] = useState('');
 
-  // Função para calcular o frete
+  // Função para validar CEP (formato #####-###)
+  const validarCep = (cep) => {
+    const regexCep = /^[0-9]{5}-[0-9]{3}$/;
+    return regexCep.test(cep);
+  };
+
+  // Função para validar o peso
+  const validarPeso = (peso) => {
+    if (peso <= 0 || peso > 12) {
+      setErroPeso('O peso deve ser entre 0 e 12 kg.');
+      return false;
+    }
+    setErroPeso('');
+    return true;
+  };
+
+  // Função para calcular frete
   const calcularFrete = () => {
-    // Verificar se os CEPs são válidos da Grande Vitória
-    if (!validarCep(cepOrigem) || !validarCep(cepDestino)) {
-      alert('Os CEPs devem ser da Grande Vitória (ES).');
+    // Validação dos CEPs
+    if (!validarCep(cepOrigem)) {
+      setErroCep('CEP de origem inválido. Formato correto: #####-###.');
       return;
     }
 
-    // Validar os campos
-    if (!cepOrigem || !cepDestino || !largura || !altura || !comprimento || !peso) {
+    if (!validarCep(cepDestino)) {
+      setErroCep('CEP de destino inválido. Formato correto: #####-###.');
+      return;
+    }
+
+    // Validação do peso
+    if (!validarPeso(peso)) return;
+
+    // Verificação dos outros campos
+    if (largura && altura && comprimento && peso) {
+      // Cálculo do valor baseado no peso
+      let valorPeso = 0;
+      if (peso <= 1) valorPeso = 3;
+      else if (peso <= 3) valorPeso = 5;
+      else if (peso <= 8) valorPeso = 9;
+      else if (peso <= 12) valorPeso = 12;
+
+      // Calculando o valor do frete com base na distância (simplificação usando um valor fixo)
+      const distancia = calcularDistancia(cepOrigem, cepDestino);
+      const tempoDeslocamento = calcularTempo(distancia);
+
+      // Fórmula simples para o cálculo de frete com base no peso e distância
+      const valorFrete = valorPeso + (distancia * 0.1) + (tempoDeslocamento * 0.05);
+      setPrecoFrete(valorFrete.toFixed(2)); // Formatar para 2 casas decimais
+      setConfirmandoFrete(true);
+      setErroCep(''); // Limpa a mensagem de erro, se houver
+    } else {
       alert('Preencha todos os campos para calcular o frete.');
-      return;
     }
+  };
 
-    // Calcular o volume do pacote (em cm³)
-    const volumePacote = largura * altura * comprimento;
+  // Função para simular o cálculo de distância entre os CEPs
+  const calcularDistancia = (cepOrigem, cepDestino) => {
+    // Exemplo simplificado de cálculo de distância entre dois CEPs
+    return Math.abs(parseInt(cepDestino.replace('-', '')) - parseInt(cepOrigem.replace('-', ''))) % 100; // Distância em km
+  };
 
-    // Definir taxas para cálculo
-    const taxaBase = 10; // Taxa fixa
-    const taxaPeso = 5; // Taxa por kg
-    const taxaVolume = 0.002; // Taxa por cm³ (exemplo: R$ 2 a cada 1000 cm³)
-    const taxaDistancia = 0.10; // Taxa por quilômetro
-
-    // Calcular a distância entre os CEPs (exemplo fixo de 10km, substituir com a API de distâncias)
-    const distancia = calcularDistancia(cepOrigem, cepDestino);
-
-    // Cálculos
-    const custoPeso = peso * taxaPeso;
-    const custoVolume = volumePacote * taxaVolume;
-    const custoDistancia = distancia * taxaDistancia;
-
-    // Calcular o preço total do frete
-    const precoTotalFrete = taxaBase + custoPeso + custoVolume + custoDistancia;
-
-    // Exibir preço
-    setPrecoFrete(precoTotalFrete);
-    setConfirmandoFrete(true);
+  // Função para simular o cálculo do tempo de deslocamento (em horas)
+  const calcularTempo = (distancia) => {
+    return (distancia / 60).toFixed(2); // Tempo de deslocamento (em horas) para cada 60km de distância
   };
 
   // Função para confirmar solicitação de frete
   const confirmarFrete = () => {
-    // Lógica para confirmar e enviar a solicitação
+    // Aqui você pode adicionar lógica para enviar os dados
     setSolicitacaoEnviada(true);
     setConfirmandoFrete(false);
   };
 
-  // Função para validar CEPs da Grande Vitória (ES)
-  const validarCep = (cep) => {
-    const cepNumerico = cep.replace(/\D/g, '');
-    const regexGrandeVitoria = /^(29[0-9]{3}|291[0-9]{3}|292[0-9]{3}|293[0-9]{3})$/;
-    return regexGrandeVitoria.test(cepNumerico);
-  };
-
   return (
-    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto',  }}>
       <h2>Solicitação de Frete</h2>
 
       {/* Formulário Inicial */}
-      <div style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '5px' }}>
+      <div style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '5px', backgroundColor: 'black', color: 'white' }}>
         <div>
           <label>Digite CEP de origem:</label>
-          <input type="text" value={cepOrigem} onChange={(e) => setCepOrigem(e.target.value)} />
+          <input
+            type="text"
+            value={cepOrigem}
+            onChange={(e) => setCepOrigem(e.target.value)}
+            placeholder="Ex: 12345-678"
+          />
         </div>
+        
         <div>
           <label>Digite CEP do destinatário:</label>
-          <input type="text" value={cepDestino} onChange={(e) => setCepDestino(e.target.value)} />
+          <input
+            type="text"
+            value={cepDestino}
+            onChange={(e) => setCepDestino(e.target.value)}
+            placeholder="Ex: 12345-678"
+          />
         </div>
+        {erroCep && <p style={{ color: 'red' }}>{erroCep}</p>}
+        {erroPeso && <p style={{ color: 'red' }}>{erroPeso}</p>}
+        
         <div>
           <h4>Tamanho e peso do pacote</h4>
+          <p>O pacote pode ter até 30 kg e até 100 cm em cada lado. A soma dos lados não deve ultrapassar 200 cm.</p>
           <label>Largura (cm):</label>
           <input type="number" value={largura} onChange={(e) => setLargura(e.target.value)} />
           <label>Altura (cm):</label>
@@ -99,33 +130,51 @@ function SolicitacaoFrete() {
           <label>Peso (kg):</label>
           <input type="number" value={peso} onChange={(e) => setPeso(e.target.value)} />
         </div>
-        <button onClick={calcularFrete}>Calcular Frete</button>
+        <br />
+        <button onClick={calcularFrete} className='btn'>Calcular Frete</button>
       </div>
 
       {/* Resultado do Cálculo do Frete */}
       {precoFrete && confirmandoFrete && (
-        <div style={{ backgroundColor: 'red', color: 'white', padding: '20px', marginTop: '20px' }}>
-          <p>Preço do Frete: R$ {precoFrete.toFixed(2)}</p>
+        <div style={{ backgroundColor: '', color: 'white', padding: '0px', marginTop: '0px', textAlign: 'center' }}>
+          <p>Preço do Frete: R$ {precoFrete}</p>
           <p>Deseja solicitar frete?</p>
-          <button onClick={confirmarFrete}>Sim, Solicitar Frete</button>
+          <button onClick={confirmarFrete} className='btn2'>Sim, Solicitar Frete</button>
         </div>
       )}
 
       {/* Formulário Completo de Solicitação */}
       {solicitacaoEnviada && (
-        <div style={{ marginTop: '20px' }}>
+        <div style={{ marginTop: '20px', backgroundColor: 'black', color: 'white' }}>
           <h3>Dados do Remetente</h3>
-          {/* Dados do Remetente */}
-          <button>Confirmar Frete</button>
-          <button>Imprimir para Motoboy</button>
-        </div>
-      )}
+          <label>Logradouro:</label>
+          <input type="text" />
+          <label>Bairro:</label>
+          <input type="text" />
+          <label>Número (opcional):</label>
+          <input type="text" />
+          <label>Complemento (opcional):</label>
+          <input type="text" />
+          <label>Nome do Remetente:</label>
+          <input type="text" />
+          <label>Celular:</label>
+          <input type="text" />
+          <label>CPF ou CNPJ:</label>
+          <input type="text" />
+          <label>Email:</label>
+          <input type="email" />
 
-      {/* Mensagem de Confirmação Final */}
-      {solicitacaoEnviada && (
-        <div style={{ marginTop: '20px', color: 'green' }}>
-          <p>Solicitação enviada com sucesso!</p>
-          <button onClick={() => window.location.reload()}>Voltar para o início</button>
+          <h3>Dados do Destinatário</h3>
+          <label>Logradouro:</label>
+          <input type="text" />
+          <label>Bairro:</label>
+          <input type="text" />
+          <label>Número (opcional):</label>
+          <input type="text" />
+          <label>Complemento (opcional):</label>
+          <input type="text" />
+          <label>Instruções (opcional):</label>
+          <input type="text" />
         </div>
       )}
     </div>

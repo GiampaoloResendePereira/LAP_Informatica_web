@@ -33,11 +33,13 @@ const CadastroCliente = () => {
                 body: JSON.stringify(clienteData),
             });
 
+            const data = await response.json();
+
             if (response.ok) {
                 console.log('Cadastro realizado com sucesso');
                 navigate('/'); // Redireciona após o cadastro
             } else {
-                console.error('Erro no cadastro');
+                console.error('Erro no cadastro:', data.message);
             }
         } catch (error) {
             console.error('Erro na conexão com o servidor:', error);
@@ -49,10 +51,10 @@ const CadastroCliente = () => {
     };
 
     return (
-        <div style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
+        <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto',  }}>
             <h2>Cadastro de Cliente</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div >
                     <label>Nome:</label>
                     <input
                         type="text"
@@ -115,7 +117,7 @@ const CadastroCliente = () => {
                         required
                     />
                 </div>
-                <button type="submit" className="btn btn-danger ms-2">Cadastrar</button>
+                <button type="submit" className="btn btn-danger ms-2" style={{ marginRight: '10px' }}>Cadastrar</button>
                 <button type="button" className="btn btn-danger ms-2" onClick={handleCancel}>Cancelar</button>
             </form>
         </div>

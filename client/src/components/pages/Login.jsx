@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Atualizando para useNavigate
+import logo from '../../assets/img/logo.png';
+import '../../styles/Login.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -17,9 +19,18 @@ const Login = () => {
     };
 
     return (
-        <div className="login-container">
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
+        <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+            <div className="container">
+  <img 
+    src={logo} 
+    alt="Logo" 
+    className="login-logo" 
+    style={{ width: '150px', height: 'auto' }} 
+  />
+</div>
+
+
+            <form className= "login_form" onSubmit={handleSubmit}>
                 <div>
                     <label>Email:</label>
                     <input
