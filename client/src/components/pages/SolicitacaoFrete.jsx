@@ -16,6 +16,7 @@ function SolicitacaoFrete() {
   const [solicitacaoEnviada, setSolicitacaoEnviada] = useState(false);
   const [erroCep, setErroCep] = useState('');
   const [erroPeso, setErroPeso] = useState('');
+  const [freteConfirmado, setFreteConfirmado] = useState(false); // Novo estado para controlar a confirmação de frete
 
   // Função para validar CEP (formato #####-###)
   const validarCep = (cep) => {
@@ -85,13 +86,18 @@ function SolicitacaoFrete() {
 
   // Função para confirmar solicitação de frete
   const confirmarFrete = () => {
-    // Aqui você pode adicionar lógica para enviar os dados
     setSolicitacaoEnviada(true);
     setConfirmandoFrete(false);
+    setFreteConfirmado(true); // Atualiza o estado indicando que o frete foi confirmado
+  };
+
+  // Função para imprimir a solicitação para o motoboy
+  const imprimirParaMotoboy = () => {
+    window.print(); // Essa função chama o comando de impressão no navegador
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto',  }}>
+    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
       <h2>Solicitação de Frete</h2>
 
       {/* Formulário Inicial */}
@@ -143,9 +149,17 @@ function SolicitacaoFrete() {
         </div>
       )}
 
+      {/* Botões após a confirmação do frete */}
+      {freteConfirmado && (
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+          <p>Frete confirmado! Dados prontos para motoboy.</p>
+          <button onClick={imprimirParaMotoboy} className='btn3'>Imprimir para Motoboy</button>
+        </div>
+      )}
+
       {/* Formulário Completo de Solicitação */}
       {solicitacaoEnviada && (
-        <div style={{ marginTop: '20px', backgroundColor: 'black', color: 'white' }}>
+        <div style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '5px', backgroundColor: 'black', color: 'white' }}>
           <h3>Dados do Remetente</h3>
           <label>Logradouro:</label>
           <input type="text" />
