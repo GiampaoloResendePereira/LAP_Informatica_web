@@ -1,5 +1,5 @@
 import { createCliente } from '../models/CadastroClienteModel.js';
-import { validateCliente } from '../validations/CadastroClienteValidation.js';
+import { validateCliente } from '../Validation/CadastroClienteValidation.js';
 
 // Função de cadastro do cliente
 export async function cadastroCliente(req, res) {

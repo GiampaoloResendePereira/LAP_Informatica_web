@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise';
-import db from './conexao.js'; // Importa a conexão com o banco
+import db from '../conexao.js'; // Importa a conexão com o banco
 
 // Função para cadastrar cliente no banco de dados
 export async function createCliente(cliente) {
