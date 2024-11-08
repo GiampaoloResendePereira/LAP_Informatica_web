@@ -3,7 +3,7 @@ import logo from '../../assets/img/logo.png';
 import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap'; // Adicione NavDropdown aqui
 import '../../styles/TelaCliente.css'; // Importando o CSS global
-import SolicitacaoFrete from '../pages/SolicitacaoFrete';
+import CalculoFrete from '../pages/CalculoFrete';
 
 
 function TelaCliente(){
@@ -19,9 +19,12 @@ function TelaCliente(){
         <Container>
           
             <img src={logo} alt="Logo" height="50" />
+
+            
           
           <Nav className="me-auto">
-            
+          
+
             
             <div className="align-right">
           <button className="sair-button">
@@ -32,7 +35,7 @@ function TelaCliente(){
         </Container>
       </Navbar>
 
-      <SolicitacaoFrete/>
+      <CalculoFrete/>
 
       
     </div>

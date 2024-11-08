@@ -103,7 +103,7 @@ function EditarParametro() {
       </div>
 
       {/* Botões de Ação */}
-      <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <button onClick={salvarAlteracoes} style={{ marginRight: '10px' }}>Salvar</button>
         <button onClick={cancelarEdicao}>Cancelar</button>
       </div>

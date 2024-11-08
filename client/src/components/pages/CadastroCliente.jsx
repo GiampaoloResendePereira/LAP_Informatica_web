@@ -51,11 +51,11 @@ const CadastroCliente = () => {
     };
 
     return (
-        <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto',  }}>
+        <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto'  }}>
             <h2>Cadastro de Cliente</h2>
             <form onSubmit={handleSubmit}>
                 <div >
-                    <label>Nome:</label>
+                    <label style={{ color: 'black' }}>Nome:</label>
                     <input
                         type="text"
                         value={nome}
@@ -64,7 +64,7 @@ const CadastroCliente = () => {
                     />
                 </div>
                 <div>
-                    <label>Sobrenome:</label>
+                    <label style={{ color: 'black' }}>Sobrenome:</label>
                     <input
                         type="text"
                         value={sobrenome}
@@ -73,7 +73,7 @@ const CadastroCliente = () => {
                     />
                 </div>
                 <div>
-                    <label>CPF:</label>
+                    <label style={{ color: 'black' }}>CPF:</label>
                     <input
                         type="text"
                         value={cpf}
@@ -82,7 +82,7 @@ const CadastroCliente = () => {
                     />
                 </div>
                 <div>
-                    <label>Telefone:</label>
+                    <label style={{ color: 'black' }}>Telefone:</label>
                     <input
                         type="text"
                         value={telefone}
@@ -91,7 +91,7 @@ const CadastroCliente = () => {
                     />
                 </div>
                 <div>
-                    <label>Data de Nascimento:</label>
+                    <label style={{ color: 'black' }}>Data de Nascimento:</label>
                     <input
                         type="date"
                         value={dataNascimento}
@@ -100,7 +100,7 @@ const CadastroCliente = () => {
                     />
                 </div>
                 <div>
-                    <label>Email:</label>
+                    <label style={{ color: 'black' }}>Email:</label>
                     <input
                         type="email"
                         value={email}
@@ -109,7 +109,7 @@ const CadastroCliente = () => {
                     />
                 </div>
                 <div>
-                    <label>Senha:</label>
+                    <label style={{ color: 'black' }}>Senha:</label>
                     <input
                         type="password"
                         value={senha}

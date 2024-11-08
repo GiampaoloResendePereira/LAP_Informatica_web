@@ -28,6 +28,9 @@ const TelaAdministrador = () => {
             <img src={logo} alt="Logo" height="50" />
           
           <Nav className="me-auto">
+            
+
+
             <Nav.Link href="/editar-parametro">Editar Parametro de Frete</Nav.Link>
 
             <div className="align-right">
