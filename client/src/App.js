@@ -12,16 +12,18 @@ import RecuperacaoSenha from './components/pages/RecuperacaoSenha';
 
 import SolicitacaoFrete from './components/pages/SolicitacaoFrete';
 import TelaCliente from './components/layout/TelaCliente';
-import CalculoFrete from './components/pages/CalculoFrete'
+import CalculoFrete from './components/pages/CalculoFrete';
+
+import Teste from './components/pages/Teste';
 
 function App() {
   return (
     <Router>
       <Routes>
         {/* Rotas */}
-           
+        <Route path="/" element={<Teste />} />   
         <Route path="/cadastrar-cliente" element={<CadastroCliente />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/recuperacao-senha" element={<RecuperacaoSenha />} />
 
         <Route path="/cliente" element={<TelaCliente />} />       

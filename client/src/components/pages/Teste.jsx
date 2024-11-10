@@ -296,7 +296,7 @@ function CadastroCliente() {
             </div>
 
             <div className="d-flex justify-content-between">
-                <button onClick={handleCadastro} className="btn btn-danger">Cadastrar</button>
+                <button onClick={handleCadastro} className="btn btn-primary">Cadastrar</button>
                 <button onClick={handleCancel} className="btn btn-secondary">Cancelar</button>
             </div>
         </div>

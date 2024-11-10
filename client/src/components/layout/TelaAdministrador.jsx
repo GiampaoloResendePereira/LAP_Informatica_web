@@ -4,7 +4,6 @@ import React from 'react';
 import GerenciamentoEntrega from '../pages/GerenciamentoEntrega';
 import { Navbar, Container, Nav } from 'react-bootstrap'; // Adicione NavDropdown aqui
 import { useNavigate } from "react-router-dom"; // Importa o hook para navegação
-import '../../styles/TelaAdministrador.css'; // Importando o CSS global
 
 
 const TelaAdministrador = () => {
