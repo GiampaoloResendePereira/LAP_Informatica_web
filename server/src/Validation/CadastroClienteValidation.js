@@ -1,7 +1,7 @@
 // Função para validar os dados de cadastro do cliente
 export function validateCliente(cliente) {
     // Verifica se todos os campos obrigatórios estão preenchidos
-    if (!cliente.nome || !cliente.sobrenome || !cliente.cpf || !cliente.telefone || !cliente.email || !cliente.senha || !cliente.dataNascimento) {
+    if (!cliente.nome || !cliente.sobrenome || !cliente.cpf || !cliente.telefone || !cliente.email || !cliente.senha || !cliente.data_nascimento) {
         return 'Todos os campos são obrigatórios.';
     }
 
@@ -32,7 +32,7 @@ export function validateCliente(cliente) {
     }
 
     // Verifica se a data de nascimento é válida
-    const dataNascimento = new Date(cliente.dataNascimento);
+    const dataNascimento = new Date(cliente.cliente.data_nascimento);
     const idade = new Date().getFullYear() - dataNascimento.getFullYear();
     if (idade < 18) {
         return 'O cliente deve ser maior de idade para se cadastrar.';

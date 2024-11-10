@@ -1,22 +1,20 @@
-// /controllers/loginController.js
-const Usuario = require('../models/usuarioModel');
+import { updateParametro } from '../models/EditarParametroModel.js';
+import { isNullOrEmpty, validateParametro } from '../Validation/EditarParametroValidation.js';
 
-const loginController = {
-    login: (req, res) => {
-        const { email, senha } = req.body;
+export async function atualizandoParametro(req, res) {
+  console.log('EditarParametroController atualizandoParametro');
+  const { id } = req.params;
+  const parametro = req.body;
 
-        if (!email || !senha) {
-            return res.status(400).json({ message: 'Email e senha são obrigatórios.' });
-        }
-
-        Usuario.findByEmail(email, (err, usuario) => {
-            if (err) return res.status(500).json({ message: 'Erro ao buscar usuário.' });
-            if (!usuario || usuario.senha !== senha) {
-                return res.status(401).json({ message: 'Email ou senha incorretos.' });
-            }
-            res.status(200).json({ message: 'Login bem-sucedido!', usuario });
-        });
-    },
-};
-
-module.exports = loginController;
+  if (validateParametro(parametro) || isNullOrEmpty(id)) {
+    res.status(400).json({ message: 'Parametro não pode conter campos vazios' });
+  } else {
+    try {
+      const [status, resposta] = await updateParametro(parametro, id);
+      res.status(status).json(resposta);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(error);
+    }
+  }
+}
