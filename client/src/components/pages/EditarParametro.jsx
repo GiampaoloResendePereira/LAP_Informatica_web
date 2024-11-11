@@ -1,33 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function EditarParametro() {
   const { id } = useParams();
 
-  // Declaração dos estados para cada valor
+  // Declaração dos estados para valores e feedbacks
   const [valorMenos1Kg, setValorMenos1Kg] = useState(0);
   const [valor1a3Kg, setValor1a3Kg] = useState(0);
   const [valor3a8Kg, setValor3a8Kg] = useState(0);
   const [valor8a12Kg, setValor8a12Kg] = useState(0);
   const [valorPorKm, setValorPorKm] = useState(0);
+  const [valoresIniciais, setValoresIniciais] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [erro, setErro] = useState(null);
 
-  // Função para edição do parâmetro
+  // Função para carregar os parâmetros existentes ao montar o componente
+  useEffect(() => {
+    async function carregarParametro() {
+      setLoading(true);
+      try {
+        const resposta = await fetch(`http://localhost:5000/obter-parametro/${id}`);
+        const dados = await resposta.json();
+        setValorMenos1Kg(dados.valorMenos1Kg);
+        setValor1a3Kg(dados.valor1a3Kg);
+        setValor3a8Kg(dados.valor3a8Kg);
+        setValor8a12Kg(dados.valor8a12Kg);
+        setValorPorKm(dados.valorPorKm);
+        setValoresIniciais(dados); // Armazena os valores iniciais
+      } catch (error) {
+        setErro("Erro ao carregar parâmetros");
+      } finally {
+        setLoading(false);
+      }
+    }
+    carregarParametro();
+  }, [id]);
+
+  // Função para editar o parâmetro
   async function editParametro(infoParametro, id) {
+    setLoading(true);
+    setErro(null);
     try {
-      const resposta = await fetch(`http://localhost:5000/aulas/${id}`, {
+      const resposta = await fetch(`http://localhost:5000/editar-parametro/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(infoParametro),
       });
 
       if (!resposta.ok) {
-        console.log('Erro ao editar parâmetro');
-      } else {
-        alert('Parâmetro editado com sucesso');
+        throw new Error("Erro ao editar parâmetro");
       }
+      alert('Parâmetro editado com sucesso');
     } catch (error) {
-      console.error('Erro na edição de parâmetro', error);
+      setErro("Erro na edição de parâmetro");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -37,18 +65,21 @@ function EditarParametro() {
     editParametro(infoParametro, id);
   }
 
-  // Função para cancelar a edição
+  // Função para cancelar a edição e restaurar valores iniciais
   function cancelarEdicao() {
-    setValorMenos1Kg(0);
-    setValor1a3Kg(0);
-    setValor3a8Kg(0);
-    setValor8a12Kg(0);
-    setValorPorKm(0);
+    setValorMenos1Kg(valoresIniciais.valorMenos1Kg);
+    setValor1a3Kg(valoresIniciais.valor1a3Kg);
+    setValor3a8Kg(valoresIniciais.valor3a8Kg);
+    setValor8a12Kg(valoresIniciais.valor8a12Kg);
+    setValorPorKm(valoresIniciais.valorPorKm);
   }
 
   return (
     <div className="container bg-light p-5">
       <h2 className="bg-dark text-white rounded p-3 mb-4">Editar Parâmetros de Frete</h2>
+
+      {loading && <p>Carregando...</p>}
+      {erro && <p className="text-danger">{erro}</p>}
 
       {/* Tabela de Valor por Peso */}
       <div className="mb-4 p-3 border rounded bg-white shadow-sm">
@@ -65,7 +96,12 @@ function EditarParametro() {
               step="0.01"
               className="form-control"
               value={item.value}
-              onChange={(e) => item.setValue(parseFloat(e.target.value))}
+              onChange={(e) => {
+                const newValue = parseFloat(e.target.value);
+                if (newValue >= (item.min || 0)) {
+                  item.setValue(newValue);
+                }
+              }}
               min={item.min || 0}
             />
           </div>
@@ -92,8 +128,12 @@ function EditarParametro() {
 
       {/* Botões de Ação */}
       <div className="d-flex justify-content-between">
-        <button onClick={salvarAlteracoes} className="btn btn-danger">Salvar</button>
-        <button onClick={cancelarEdicao} className="btn btn-secondary">Cancelar</button>
+        <button onClick={salvarAlteracoes} className="btn btn-danger" disabled={loading}>
+          {loading ? "Salvando..." : "Salvar"}
+        </button>
+        <button onClick={cancelarEdicao} className="btn btn-secondary" disabled={loading}>
+          Cancelar
+        </button>
       </div>
     </div>
   );

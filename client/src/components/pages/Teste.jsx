@@ -1,306 +1,202 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';  // Certifique-se de importar o Bootstrap
-import axios from 'axios';  // Importar Axios para fazer a requisição
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function CadastroCliente() {
-    const navigate = useNavigate();
+// Tabela de valores por peso
+const tabelaPeso = [
+  { limite: 1, valor: 3.00 },
+  { limite: 3, valor: 5.00 },
+  { limite: 8, valor: 9.00 },
+  { limite: 12, valor: 12.00 },
+  { limite: Infinity, valor: 'Não é possível transportar' },
+];
 
-    // Estados para armazenar os dados do cliente
-    const [nome, setNome] = useState('');
-    const [sobrenome, setSobrenome] = useState('');
-    const [cpf, setCpf] = useState('');
-    const [telefone, setTelefone] = useState('');
-    const [dataNascimento, setDataNascimento] = useState('');
-    const [cep, setCep] = useState('');
-    const [rua, setRua] = useState('');
-    const [numero, setNumero] = useState('');
-    const [bairro, setBairro] = useState('');
-    const [cidade, setCidade] = useState('');
-    const [estado, setEstado] = useState('');
-    const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
+function CalculoFrete() {
+  // Estados para armazenar os valores dos campos
+  const [cepOrigem, setCepOrigem] = useState('');
+  const [cepDestino, setCepDestino] = useState('');
+  const [peso, setPeso] = useState('');
+  const [valorFrete, setValorFrete] = useState(null);
+  const [errorCepOrigem, setErrorCepOrigem] = useState('');
+  const [errorCepDestino, setErrorCepDestino] = useState('');
+  const [errorPeso, setErrorPeso] = useState('');
+  const [distancia, setDistancia] = useState(0);
 
-    // Função para manipular o cadastro
-    const handleCadastro = () => {
-        if (
-            nome.trim() === '' ||
-            sobrenome.trim() === '' ||
-            cpf.trim() === '' ||
-            telefone.trim() === '' ||
-            dataNascimento.trim() === '' ||
-            cep.trim() === '' ||
-            rua.trim() === '' ||
-            numero.trim() === '' ||
-            bairro.trim() === '' ||
-            cidade.trim() === '' ||
-            estado.trim() === '' ||
-            email.trim() === '' ||
-            senha.trim() === ''
-        ) {
-            alert('Por favor, preencha todos os campos.');
-        } else {
-            // Criando o objeto com os dados do cliente
-            const clienteData = {
-                nome,
-                sobrenome,
-                cpf,
-                telefone,
-                dataNascimento,
-                cep,
-                rua,
-                numero,
-                bairro,
-                cidade,
-                estado,
-                email,
-                senha
-            };
+  // Função para validar o formato do CEP
+  const validarCep = (cep) => {
+    const regexCep = /^[0-9]{5}-[0-9]{3}$/; // Validação de CEP no formato XXXXX-XXX
+    return regexCep.test(cep);
+  };
 
-            // Realizando a requisição POST para o backend
-            axios
-                .post('https://seu-backend-api.com/cadastrar-cliente', clienteData)
-                .then((response) => {
-                    console.log('Cliente cadastrado com sucesso:', response.data);
-                    alert('Cliente cadastrado com sucesso!');
-                    
-                    // Limpar os campos após o cadastro
-                    setNome('');
-                    setSobrenome('');
-                    setCpf('');
-                    setTelefone('');
-                    setDataNascimento('');
-                    setCep('');
-                    setRua('');
-                    setNumero('');
-                    setBairro('');
-                    setCidade('');
-                    setEstado('');
-                    setEmail('');
-                    setSenha('');
+  // Função para validar o peso (número positivo)
+  const validarPeso = (peso) => {
+    const regexPeso = /^[0-9]+(\.[0-9]{1,2})?$/; // Valida números com até duas casas decimais
+    return regexPeso.test(peso);
+  };
 
-                    // Redirecionar para a tela inicial ou outra página
-                    navigate('/');
-                })
-                .catch((error) => {
-                    console.error('Erro ao cadastrar cliente:', error);
-                    alert('Erro ao cadastrar cliente. Tente novamente.');
-                });
-        }
-    };
+  // Função para calcular o valor do frete com base no peso
+  const calcularValorPeso = (peso) => {
+    const pesoFloat = parseFloat(peso);
+    for (let i = 0; i < tabelaPeso.length; i++) {
+      if (pesoFloat <= tabelaPeso[i].limite) {
+        return tabelaPeso[i].valor;
+      }
+    }
+  };
 
-    // Função para cancelar e voltar à tela inicial
-    const handleCancel = () => {
-        // Limpar os campos
-        setNome('');
-        setSobrenome('');
-        setCpf('');
-        setTelefone('');
-        setDataNascimento('');
-        setCep('');
-        setRua('');
-        setNumero('');
-        setBairro('');
-        setCidade('');
-        setEstado('');
-        setEmail('');
-        setSenha('');
-        
-        // Redirecionar para a tela inicial
-        navigate('/');
-    };
+  // Função para calcular o valor do frete por km rodado
+  const calcularValorKm = (km) => {
+    const precoPorKm = 0.50; // Preço base por km
+    return km * precoPorKm;
+  };
 
-    // Função para buscar o endereço com base no CEP
-    const handleCepChange = (e) => {
-        const cepValue = e.target.value;
-        setCep(cepValue);
+  // Função para calcular a distância entre dois pontos utilizando a API do Distance Matrix
+  const calcularDistancia = async (cepOrigem, cepDestino) => {
+    try {
+      // Chave de API fornecida
+      const key = 'fMPFKZjJhlioZjnswMy3YqzzYrorh30HfkeZuFT1Mwq93mtt9Q0KYPds8oEHIHYb';
+      
+      // Consultar a API DistanceMatrix para calcular a distância entre os pontos
+      const url = `https://api.distancematrix.ai/maps/api/distancematrix/json?origins=${cepOrigem}&destinations=${cepDestino}&key=${key}`;
+      const response = await fetch(url);
+      const data = await response.json();
 
-        if (cepValue.length === 8) { // Verifica se o CEP tem 8 caracteres (formato válido)
-            axios
-                .get(`https://viacep.com.br/ws/${cepValue}/json/`)
-                .then((response) => {
-                    const { logradouro, bairro, localidade, uf } = response.data;
-                    if (logradouro && bairro && localidade && uf) {
-                        setRua(logradouro);
-                        setBairro(bairro);
-                        setCidade(localidade);
-                        setEstado(uf);
-                    } else {
-                        alert('CEP não encontrado!');
-                    }
-                })
-                .catch((error) => {
-                    console.error('Erro ao buscar o CEP:', error);
-                    alert('Erro ao buscar o CEP!');
-                });
-        }
-    };
+      // Verificar se a resposta contém a distância e atualizar o estado
+      if (data.status === 'OK') {
+        const distanciaEmKm = data.rows[0].elements[0].distance.value / 1000; // A distância é retornada em metros
+        setDistancia(distanciaEmKm);
+      } else {
+        alert('Erro ao calcular a distância entre os CEPs.');
+      }
+    } catch (error) {
+      console.error('Erro ao calcular distância: ', error);
+      alert('Erro ao calcular a distância entre os CEPs.');
+    }
+  };
 
-    return (
-        <div className="container bg-light p-5">
-            <h2 className="bg-dark text-white rounded p-3 mb-4">Cadastro de Cliente</h2>
+  // Função para lidar com o envio do formulário
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-            <div className="mb-3">
-                <label htmlFor="nome" className="form-label">Nome</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="nome"
-                    placeholder="Digite o nome do cliente"
-                    value={nome}
-                    onChange={(e) => setNome(e.target.value)}
-                />
-            </div>
+    let isValid = true;
+    setErrorCepOrigem('');
+    setErrorCepDestino('');
+    setErrorPeso('');
 
-            <div className="mb-3">
-                <label htmlFor="sobrenome" className="form-label">Sobrenome</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="sobrenome"
-                    placeholder="Digite o sobrenome do cliente"
-                    value={sobrenome}
-                    onChange={(e) => setSobrenome(e.target.value)}
-                />
-            </div>
+    // Validação do CEP de origem
+    if (!validarCep(cepOrigem)) {
+      setErrorCepOrigem('CEP de origem inválido. Formato correto: XXXXX-XXX');
+      isValid = false;
+    }
 
-            <div className="mb-3">
-                <label htmlFor="cpf" className="form-label">CPF</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="cpf"
-                    placeholder="Digite o CPF do cliente"
-                    value={cpf}
-                    onChange={(e) => setCpf(e.target.value)}
-                />
-            </div>
+    // Validação do CEP de destino
+    if (!validarCep(cepDestino)) {
+      setErrorCepDestino('CEP de destino inválido. Formato correto: XXXXX-XXX');
+      isValid = false;
+    }
 
-            <div className="mb-3">
-                <label htmlFor="telefone" className="form-label">Telefone</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="telefone"
-                    placeholder="Digite o telefone do cliente"
-                    value={telefone}
-                    onChange={(e) => setTelefone(e.target.value)}
-                />
-            </div>
+    // Validação do peso
+    if (!validarPeso(peso)) {
+      setErrorPeso('Peso inválido. Formato correto: um número positivo com até duas casas decimais.');
+      isValid = false;
+    }
 
-            <div className="mb-3">
-                <label htmlFor="dataNascimento" className="form-label">Data de Nascimento</label>
-                <input
-                    type="date"
-                    className="form-control"
-                    id="dataNascimento"
-                    value={dataNascimento}
-                    onChange={(e) => setDataNascimento(e.target.value)}
-                />
-            </div>
+    if (isValid) {
+      // Calcular distância
+      calcularDistancia(cepOrigem, cepDestino);
 
-            <div className="mb-3">
-                <label htmlFor="cep" className="form-label">CEP</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="cep"
-                    placeholder="Digite o CEP do cliente"
-                    value={cep}
-                    onChange={handleCepChange} // Chama a função para buscar o endereço
-                />
-            </div>
+      // Calcular valor do frete
+      const valorPeso = calcularValorPeso(peso);
+      if (valorPeso === 'Não é possível transportar') {
+        alert('Peso inválido para transporte.');
+        setValorFrete(valorPeso);
+        return;
+      }
 
-            <div className="mb-3">
-                <label htmlFor="rua" className="form-label">Rua</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="rua"
-                    placeholder="Digite a rua"
-                    value={rua}
-                    onChange={(e) => setRua(e.target.value)}
-                />
-            </div>
+      const valorKm = calcularValorKm(distancia);
+      const valorTotal = valorPeso === 'Não é possível transportar' ? valorPeso : valorPeso + valorKm;
 
-            <div className="mb-3">
-                <label htmlFor="numero" className="form-label">Número</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="numero"
-                    placeholder="Digite o número da residência"
-                    value={numero}
-                    onChange={(e) => setNumero(e.target.value)}
-                />
-            </div>
+      setValorFrete(valorTotal);
+      alert('Cálculo do frete realizado com sucesso!');
+    }
+  };
 
-            <div className="mb-3">
-                <label htmlFor="bairro" className="form-label">Bairro</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="bairro"
-                    placeholder="Digite o bairro"
-                    value={bairro}
-                    onChange={(e) => setBairro(e.target.value)}
-                />
-            </div>
+  // Função para lidar com a solicitação do frete
+  const handleSolicitarFrete = () => {
+    alert('Frete solicitado com sucesso!');
+  };
 
-            <div className="mb-3">
-                <label htmlFor="cidade" className="form-label">Cidade</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="cidade"
-                    placeholder="Digite a cidade"
-                    value={cidade}
-                    onChange={(e) => setCidade(e.target.value)}
-                />
-            </div>
+  return (
+    <div className="container bg-light p-5">
+      <h2 className="bg-dark text-white rounded p-3 mb-4">Cálculo de Frete</h2>
 
-            <div className="mb-3">
-                <label htmlFor="estado" className="form-label">Estado</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="estado"
-                    placeholder="Digite o estado"
-                    value={estado}
-                    onChange={(e) => setEstado(e.target.value)}
-                />
-            </div>
-
-            <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email</label>
-                <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    placeholder="Digite o email do cliente"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </div>
-
-            <div className="mb-3">
-                <label htmlFor="senha" className="form-label">Senha</label>
-                <input
-                    type="password"
-                    className="form-control"
-                    id="senha"
-                    placeholder="Digite a senha"
-                    value={senha}
-                    onChange={(e) => setSenha(e.target.value)}
-                />
-            </div>
-
-            <div className="d-flex justify-content-between">
-                <button onClick={handleCadastro} className="btn btn-primary">Cadastrar</button>
-                <button onClick={handleCancel} className="btn btn-secondary">Cancelar</button>
-            </div>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="cepOrigem" className="form-label">CEP de Origem</label>
+          <input
+            type="text"
+            className="form-control"
+            value={cepOrigem}
+            onChange={(e) => setCepOrigem(e.target.value)}
+            placeholder="Digite o CEP de origem"
+          />
+          {errorCepOrigem && <span style={{ color: 'red' }}>{errorCepOrigem}</span>}
         </div>
-    );
+
+        <div className="mb-3">
+          <label htmlFor="cepDestino" className="form-label">CEP de Destino</label>
+          <input
+            type="text"
+            className="form-control"
+            value={cepDestino}
+            onChange={(e) => setCepDestino(e.target.value)}
+            placeholder="Digite o CEP de destino"
+          />
+          {errorCepDestino && <span style={{ color: 'red' }}>{errorCepDestino}</span>}
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="peso" className="form-label">Peso</label>
+          <input
+            type="text"
+            className="form-control"
+            value={peso}
+            onChange={(e) => setPeso(e.target.value)}
+            placeholder="Digite o peso"
+          />
+          {errorPeso && <span style={{ color: 'red' }}>{errorPeso}</span>}
+        </div>
+
+        <button className="btn btn-danger">
+          Calcular Frete
+        </button>
+      </form>
+
+      {valorFrete !== null && (
+        <div style={{
+          backgroundColor: 'black',
+          color: 'white',
+          padding: '15px',
+          marginTop: '20px',
+          fontSize: '18px',
+          fontWeight: 'bold',
+          textAlign: 'center',
+        }}>
+          {valorFrete === 'Não é possível transportar' ? 'Valor do frete: Não é possível transportar' : `Valor do frete: R$ ${valorFrete.toFixed(2)}`}
+        </div>
+      )}
+      <br />
+
+      {valorFrete !== null && valorFrete !== 'Não é possível transportar' && (
+        <button
+          onClick={handleSolicitarFrete}
+          className="btn btn-secondary"
+          style={{ width: '100%' }}
+        >
+          Solicitar Frete
+        </button>
+      )}
+    </div>
+  );
 }
 
-export default CadastroCliente;
+export default CalculoFrete;

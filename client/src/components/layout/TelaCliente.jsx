@@ -22,9 +22,10 @@ function TelaCliente(){
             
           
           <Nav className="me-auto">
-          
 
-            
+          <Nav.Link href="/calculo-frete">Calcular Frete</Nav.Link>
+          <Nav.Link href="/solicitacao-frete">Solicitação de Frete</Nav.Link>
+          
             <div className="align-right">
           <button className="sair-button">
             Sair
