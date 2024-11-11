@@ -1,106 +1,58 @@
-// Função para validar o formato do CEP (#####-###)
-export const validarCep = (cep) => {
-    const regexCep = /^[0-9]{5}-[0-9]{3}$/;
-    return regexCep.test(cep);
-};
+// EditarParametroValidation.js
 
-// Função para validar o peso do pacote (deve ser entre 0 e 12 kg)
-export const validarPeso = (peso) => {
-    if (peso <= 0 || peso > 12) {
-        return 'O peso deve ser entre 0 e 12 kg.';
+/**
+ * Verifica se o valor é nulo, indefinido ou uma string vazia.
+ * @param {any} value - Valor a ser verificado.
+ * @returns {boolean} - Retorna true se o valor for nulo ou vazio, caso contrário, false.
+ */
+export function isNullOrEmpty(value) {
+    return value === null || value === undefined || value === '';
+  }
+  
+  /**
+   * Valida o objeto de parâmetros de frete.
+   * @param {Object} parametro - Objeto que contém os parâmetros de frete.
+   * @returns {boolean} - Retorna true se todos os parâmetros são válidos, caso contrário, false.
+   */
+  export function validateParametro(parametro) {
+    const { valorMenos1Kg, valor1a3Kg, valor3a8Kg, valor8a12Kg, valorPorKm } = parametro;
+  
+    // Verifica se algum dos campos é nulo, vazio ou um valor inválido
+    if (
+      isNullOrEmpty(valorMenos1Kg) ||
+      isNullOrEmpty(valor1a3Kg) ||
+      isNullOrEmpty(valor3a8Kg) ||
+      isNullOrEmpty(valor8a12Kg) ||
+      isNullOrEmpty(valorPorKm)
+    ) {
+      return false;
     }
-    return '';
-};
-
-// Função para validar as dimensões do pacote (máximo 30kg e 100cm de cada lado; soma dos lados não pode ser maior que 200cm)
-export const validarDimensoes = (largura, altura, comprimento) => {
-    const somaDimensoes = parseFloat(largura) + parseFloat(altura) + parseFloat(comprimento);
-
-    if (largura <= 0 || altura <= 0 || comprimento <= 0) {
-        return 'As dimensões devem ser maiores que zero.';
+  
+    // Verifica se os valores são numéricos e maiores ou iguais a zero
+    if (
+      !isNumber(valorMenos1Kg) || valorMenos1Kg < 0 ||
+      !isNumber(valor1a3Kg) || valor1a3Kg < 0 ||
+      !isNumber(valor3a8Kg) || valor3a8Kg < 0 ||
+      !isNumber(valor8a12Kg) || valor8a12Kg < 0 ||
+      !isNumber(valorPorKm) || valorPorKm < 0
+    ) {
+      return false;
     }
-    if (largura > 100 || altura > 100 || comprimento > 100) {
-        return 'Cada lado do pacote deve ter no máximo 100 cm.';
+  
+    // Verifica que os valores estão em ordem crescente
+    if (!(valorMenos1Kg <= valor1a3Kg && valor1a3Kg <= valor3a8Kg && valor3a8Kg <= valor8a12Kg)) {
+      return false;
     }
-    if (somaDimensoes > 200) {
-        return 'A soma das dimensões não pode ultrapassar 200 cm.';
-    }
-    return '';
-};
-
-// Função para validar o preço do frete (se foi calculado corretamente)
-export const validarPrecoFrete = (preco) => {
-    if (preco <= 0) {
-        return 'O preço do frete deve ser maior que zero.';
-    }
-    return '';
-};
-
-// Função para validar os dados do remetente
-export const validarDadosRemetente = (dados) => {
-    const { nome, telefone, cpf, email, logradouro, bairro } = dados;
-
-    if (!nome || nome.trim() === '') return 'Nome do remetente é obrigatório.';
-    if (!telefone || telefone.trim() === '') return 'Telefone do remetente é obrigatório.';
-    if (!cpf || cpf.trim() === '') return 'CPF do remetente é obrigatório.';
-    if (!email || email.trim() === '') return 'Email do remetente é obrigatório.';
-    if (!logradouro || logradouro.trim() === '') return 'Logradouro do remetente é obrigatório.';
-    if (!bairro || bairro.trim() === '') return 'Bairro do remetente é obrigatório.';
-    
-    return '';
-};
-
-// Função para validar os dados do destinatário
-export const validarDadosDestinatario = (dados) => {
-    const { nome, telefone, cpf, email, logradouro, bairro } = dados;
-
-    if (!nome || nome.trim() === '') return 'Nome do destinatário é obrigatório.';
-    if (!telefone || telefone.trim() === '') return 'Telefone do destinatário é obrigatório.';
-    if (!cpf || cpf.trim() === '') return 'CPF do destinatário é obrigatório.';
-    if (!email || email.trim() === '') return 'Email do destinatário é obrigatório.';
-    if (!logradouro || logradouro.trim() === '') return 'Logradouro do destinatário é obrigatório.';
-    if (!bairro || bairro.trim() === '') return 'Bairro do destinatário é obrigatório.';
-    
-    return '';
-};
-
-// Função principal de validação que agrupa todas as validações acima
-export const validarSolicitacaoFrete = (solicitacao) => {
-    const {
-        cepOrigem,
-        cepDestino,
-        largura,
-        altura,
-        comprimento,
-        peso,
-        precoFrete,
-        remetente,
-        destinatario
-    } = solicitacao;
-
-    // Validação do CEP
-    if (!validarCep(cepOrigem)) return 'CEP de origem inválido. Formato correto: #####-###.';
-    if (!validarCep(cepDestino)) return 'CEP de destino inválido. Formato correto: #####-###.';
-
-    // Validação das dimensões
-    const erroDimensao = validarDimensoes(largura, altura, comprimento);
-    if (erroDimensao) return erroDimensao;
-
-    // Validação do peso
-    const erroPeso = validarPeso(peso);
-    if (erroPeso) return erroPeso;
-
-    // Validação do preço do frete
-    const erroPrecoFrete = validarPrecoFrete(precoFrete);
-    if (erroPrecoFrete) return erroPrecoFrete;
-
-    // Validação dos dados do remetente
-    const erroRemetente = validarDadosRemetente(remetente);
-    if (erroRemetente) return erroRemetente;
-
-    // Validação dos dados do destinatário
-    const erroDestinatario = validarDadosDestinatario(destinatario);
-    if (erroDestinatario) return erroDestinatario;
-
-    return ''; // Todos os dados são válidos
-};
+  
+    return true; // Retorna true se todas as validações forem bem-sucedidas
+  }
+  
+  /**
+   * Verifica se o valor fornecido é um número.
+   * @param {any} value - Valor a ser verificado.
+   * @returns {boolean} - Retorna true se o valor é um número, caso contrário, false.
+   */
+  function isNumber(value) {
+    return typeof value === 'number' && !isNaN(value);
+  }
+  
