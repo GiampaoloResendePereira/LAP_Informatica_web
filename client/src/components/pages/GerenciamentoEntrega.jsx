@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Dados de exemplo para simular os pedidos com nome do cliente
 const pedidosExemplo = [
@@ -51,12 +52,12 @@ function GerenciamentoEntrega() {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Gerenciamento de Entregas</h2>
+    <div className="container bg-light p-5">
+      <h2 className="bg-dark text-white rounded p-3 mb-4">Gerenciamento de Entregas</h2>
 
       {/* Filtro de Pesquisa */}
-      <div style={{ marginBottom: '20px' }}>
-        <label>Pesquisar por Número do Pedido:</label>
+      <div className="mb-3">
+        <label htmlFor="nome" className="form-label">Pesquisar por Número do Pedido:</label>
         <input
           type="text"
           value={pesquisa}
@@ -67,7 +68,7 @@ function GerenciamentoEntrega() {
       </div>
 
       {/* Tabela de Pedidos */}
-      <table border="1" cellPadding="8" style={{ width: '100%', marginBottom: '20px', backgroundColor: 'black', color: 'white' }}>
+      <table border="1" cellPadding="8" style={{ width: '100%', marginBottom: '20px', backgroundColor: '#f5f5f5', color: 'blcak' }}>
         <thead>
           <tr>
             <th>Número do Pedido</th>
@@ -85,7 +86,7 @@ function GerenciamentoEntrega() {
               <td>{pedido.cpf}</td> {/* CPF do Cliente */}
               <td>{pedido.valor}</td>
               <td>
-                <button onClick={() => mostrarDetalhesPedido(pedido.id)}>Detalhes</button>
+                <button onClick={() => mostrarDetalhesPedido(pedido.id)} className="btn btn-danger" >Detalhes</button>
               </td>
             </tr>
           ))}
@@ -94,14 +95,14 @@ function GerenciamentoEntrega() {
 
       {/* Modal de Detalhes do Pedido */}
       {pedidoSelecionado && (
-        <div style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '5px', backgroundColor: 'black', color: 'white' }}>
+        <div style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '5px', backgroundColor: '#f5f5f5', color: 'black' }}>
           <h3>Detalhes do Pedido</h3>
           <p><strong>Número do Pedido:</strong> {pedidoSelecionado.numeroPedido}</p>
           <p><strong>Nome do Cliente:</strong> {pedidoSelecionado.nomeCliente}</p>
           <p><strong>CPF do Cliente:</strong> {pedidoSelecionado.cpf}</p>
           <p><strong>Valor:</strong> {pedidoSelecionado.valor}</p>
           {/* Adicione outras informações do pedido aqui */}
-          <button onClick={fecharDetalhes} style={{ marginTop: '10px' }}>Fechar</button>
+          <button onClick={fecharDetalhes} className="btn btn-danger" style={{ marginTop: '10px' }}>Fechar</button>
         </div>
       )}
     </div>

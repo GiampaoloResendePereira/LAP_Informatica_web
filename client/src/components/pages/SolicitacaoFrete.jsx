@@ -1,104 +1,108 @@
-<div>
-          <h3>Dados do Remetente</h3>
-          {/* Campos para dados do remetente */}
-          <div>
-            <label>Nome:</label>
-            <input
-              value={remetente.nome}
-              onChange={(e) => setRemetente({ ...remetente, nome: e.target.value })}
-            />
-          </div>
-          <div>
-            <label>Telefone:</label>
-            <input
-              value={remetente.telefone}
-              onChange={(e) => setRemetente({ ...remetente, telefone: e.target.value })}
-            />
-          </div>
-          <div>
-            <label>E-mail:</label>
-            <input
-              value={remetente.email}
-              onChange={(e) => setRemetente({ ...remetente, email: e.target.value })}
-            />
-          </div>
-          <div>
-            <label>Logradouro:</label>
-            <input
-              value={remetente.endereco.logradouro}
-              onChange={(e) => setRemetente({ ...remetente, endereco: { ...remetente.endereco, logradouro: e.target.value } })}
-            />
-          </div>
-          <div>
-            <label>Bairro:</label>
-            <input
-              value={remetente.endereco.bairro}
-              onChange={(e) => setRemetente({ ...remetente, endereco: { ...remetente.endereco, bairro: e.target.value } })}
-            />
-          </div>
-          <div>
-            <label>Número:</label>
-            <input
-              value={remetente.endereco.numero}
-              onChange={(e) => setRemetente({ ...remetente, endereco: { ...remetente.endereco, numero: e.target.value } })}
-            />
-          </div>
-          <div>
-            <label>Complemento:</label>
-            <input
-              value={remetente.endereco.complemento}
-              onChange={(e) => setRemetente({ ...remetente, endereco: { ...remetente.endereco, complemento: e.target.value } })}
-            />
-          </div>
+import React, { useState } from "react";
 
-          {/* Formulário para dados do destinatário */}
-          <h3>Dados do Destinatário</h3>
-          <div>
-            <label>Nome:</label>
+function SolicitacaoFrete() {
+  // Estados para dados do remetente e destinatário
+  const [remetente, setRemetente] = useState({
+    nome: "",
+    telefone: "",
+    email: "",
+    endereco: {
+      logradouro: "",
+      bairro: "",
+      numero: "",
+      complemento: "",
+    },
+  });
+
+  const [destinatario, setDestinatario] = useState({
+    nome: "",
+    telefone: "",
+    email: "",
+    endereco: {
+      logradouro: "",
+      bairro: "",
+      numero: "",
+      complemento: "",
+    },
+  });
+
+  // Função para enviar a solicitação de frete
+  const handleSolicitarFrete = () => {
+    // Ações para processar o envio do frete
+    console.log("Solicitação enviada:", { remetente, destinatario });
+    alert("Solicitação de frete enviada!");
+  };
+
+  return (
+    <div className="container bg-light p-5">
+      {/* Dados do Remetente */}
+      <h3 className="bg-dark text-white rounded p-3 mb-4">Dados do Remetente</h3>
+      {Object.entries(remetente).map(([key, value]) => (
+        typeof value === 'object' ? (
+          Object.entries(value).map(([subKey, subValue]) => (
+            <div className="mb-3" key={`${key}.${subKey}`}>
+              <label className="form-label">{subKey.charAt(0).toUpperCase() + subKey.slice(1)}:</label>
+              <input
+                className="form-control"
+                value={subValue}
+                onChange={(e) =>
+                  setRemetente({
+                    ...remetente,
+                    [key]: { ...value, [subKey]: e.target.value },
+                  })
+                }
+              />
+            </div>
+          ))
+        ) : (
+          <div className="mb-3" key={key}>
+            <label className="form-label">{key.charAt(0).toUpperCase() + key.slice(1)}:</label>
             <input
-              value={destinatario.nome}
-              onChange={(e) => setDestinatario({ ...destinatario, nome: e.target.value })}
+              className="form-control"
+              value={value}
+              onChange={(e) => setRemetente({ ...remetente, [key]: e.target.value })}
             />
           </div>
-          <div>
-            <label>Telefone:</label>
+        )
+      ))}
+
+      {/* Dados do Destinatário */}
+      <h3 className="bg-dark text-white rounded p-3 mb-4">Dados do Destinatário</h3>
+      {Object.entries(destinatario).map(([key, value]) => (
+        typeof value === 'object' ? (
+          Object.entries(value).map(([subKey, subValue]) => (
+            <div className="mb-3" key={`${key}.${subKey}`}>
+              <label className="form-label">{subKey.charAt(0).toUpperCase() + subKey.slice(1)}:</label>
+              <input
+                className="form-control"
+                value={subValue}
+                onChange={(e) =>
+                  setDestinatario({
+                    ...destinatario,
+                    [key]: { ...value, [subKey]: e.target.value },
+                  })
+                }
+              />
+            </div>
+          ))
+        ) : (
+          <div className="mb-3" key={key}>
+            <label className="form-label">{key.charAt(0).toUpperCase() + key.slice(1)}:</label>
             <input
-              value={destinatario.telefone}
-              onChange={(e) => setDestinatario({ ...destinatario, telefone: e.target.value })}
+              className="form-control"
+              value={value}
+              onChange={(e) => setDestinatario({ ...destinatario, [key]: e.target.value })}
             />
           </div>
-          <div>
-            <label>E-mail:</label>
-            <input
-              value={destinatario.email}
-              onChange={(e) => setDestinatario({ ...destinatario, email: e.target.value })}
-            />
-          </div>
-          <div>
-            <label>Logradouro:</label>
-            <input
-              value={destinatario.endereco.logradouro}
-              onChange={(e) => setDestinatario({ ...destinatario, endereco: { ...destinatario.endereco, logradouro: e.target.value } })}
-            />
-          </div>
-          <div>
-            <label>Bairro:</label>
-            <input
-              value={destinatario.endereco.bairro}
-              onChange={(e) => setDestinatario({ ...destinatario, endereco: { ...destinatario.endereco, bairro: e.target.value } })}
-            />
-          </div>
-          <div>
-            <label>Número:</label>
-            <input
-              value={destinatario.endereco.numero}
-              onChange={(e) => setDestinatario({ ...destinatario, endereco: { ...destinatario.endereco, numero: e.target.value } })}
-            />
-          </div>
-          <div>
-            <label>Complemento:</label>
-            <input
-              value={destinatario.endereco.complemento}
-              onChange={(e) => setDestinatario({ ...destinatario, endereco: { ...destinatario.endereco, complemento: e.target.value } })}
-            />
-          </div>
+        )
+      ))}
+
+      {/* Botão de Solicitação */}
+      <button onClick={handleSolicitarFrete} className="btn btn-secondary mt-4">
+        Solicitar Frete
+      </button>
+    </div>
+  );
+}
+
+export default SolicitacaoFrete;

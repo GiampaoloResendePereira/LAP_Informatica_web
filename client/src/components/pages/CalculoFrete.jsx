@@ -190,7 +190,7 @@ function CalculoFrete() {
         <button
           onClick={handleSolicitarFrete}
           className="btn btn-secondary"
-          style={{ width: '100%' }}
+          
         >
           Solicitar Frete
         </button>

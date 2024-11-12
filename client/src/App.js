@@ -7,23 +7,23 @@ import GerenciamentoEntrega from './components/pages/GerenciamentoEntrega';
 import EditarParametro from './components/pages/EditarParametro';
 
 import CadastroCliente from './components/pages/CadastroCliente';
-import Login from './components/pages/Login';
+import Usuario from './components/pages/Usuario';
 import RecuperacaoSenha from './components/pages/RecuperacaoSenha';
 
 import SolicitacaoFrete from './components/pages/SolicitacaoFrete';
 import TelaCliente from './components/layout/TelaCliente';
 import CalculoFrete from './components/pages/CalculoFrete';
 
-import Teste from './components/pages/Teste';
+//import Teste from './components/pages/Teste';
 
 function App() {
   return (
     <Router>
       <Routes>
         {/* Rotas */}
-        <Route path="/" element={<Teste />} />   
+        
         <Route path="/cadastrar-cliente" element={<CadastroCliente />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Usuario />} />
         <Route path="/recuperacao-senha" element={<RecuperacaoSenha />} />
 
         <Route path="/cliente" element={<TelaCliente />} />       
