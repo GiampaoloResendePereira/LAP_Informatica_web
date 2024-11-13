@@ -211,34 +211,6 @@ function CalculoFrete() {
           </button>
         </div>
       </form>
-<<<<<<< HEAD
-=======
-
-      {valorFrete !== null && (
-        <div style={{
-          backgroundColor: 'black',
-          color: 'white',
-          padding: '15px',
-          marginTop: '20px',
-          fontSize: '18px',
-          fontWeight: 'bold',
-          textAlign: 'center',
-        }}>
-          {valorFrete === 'Não é possível transportar' ? 'Valor do frete: Não é possível transportar' : `Valor do frete: R$ ${valorFrete.toFixed(2)}`}
-        </div>
-      )}
-      <br />
-
-      {valorFrete !== null && valorFrete !== 'Não é possível transportar' && (
-        <button
-          onClick={handleSolicitarFrete}
-          className="btn btn-secondary"
-          
-        >
-          Solicitar Frete
-        </button>
-      )}
->>>>>>> 65bd2915cc4e0389b07c5efe3188c58f43b50c79
     </div>
   );
 }

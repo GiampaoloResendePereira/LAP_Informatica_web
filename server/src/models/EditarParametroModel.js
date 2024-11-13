@@ -14,7 +14,7 @@ export async function updateParametro(parametro, id) {
   }
   
   // Declaração SQL para atualização dos parâmetros sem vírgula extra
-  const sql = `UPDATE editar_parametro SET 
+  const sql = `UPDATE parametro SET 
     valorMenos1Kg = ?, 
     valor1a3Kg = ?, 
     valor3a8Kg = ?, 

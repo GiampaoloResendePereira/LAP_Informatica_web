@@ -4,6 +4,7 @@ import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap'; // Adicione NavDropdown aqui
 import CalculoFrete from '../pages/CalculoFrete';
 import { useNavigate } from "react-router-dom"; // Importa o hook para navegação
+import  '../../styles/Tela.css';
 
 
 function TelaCliente(){
