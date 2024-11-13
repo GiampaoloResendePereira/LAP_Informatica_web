@@ -59,7 +59,7 @@ function CadastroCliente() {
 
             // Realizando a requisição POST para o backend
             axios
-                .post('https://seu-backend-api.com/cadastrar-cliente', clienteData)
+                .post('http://localhost:3000/cadastrar-cliente', clienteData)
                 .then((response) => {
                     console.log('Cliente cadastrado com sucesso:', response.data);
                     alert('Cliente cadastrado com sucesso!');

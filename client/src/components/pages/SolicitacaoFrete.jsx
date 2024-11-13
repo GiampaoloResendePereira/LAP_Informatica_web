@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import axios from 'axios';
 import { jsPDF } from 'jspdf';
@@ -13,10 +14,26 @@ function SolicitacaoFrete() {
       bairro: '',
       numero: '',
       complemento: '',
+=======
+import React, { useState } from "react";
+
+function SolicitacaoFrete() {
+  // Estados para dados do remetente e destinatário
+  const [remetente, setRemetente] = useState({
+    nome: "",
+    telefone: "",
+    email: "",
+    endereco: {
+      logradouro: "",
+      bairro: "",
+      numero: "",
+      complemento: "",
+>>>>>>> 65bd2915cc4e0389b07c5efe3188c58f43b50c79
     },
   });
 
   const [destinatario, setDestinatario] = useState({
+<<<<<<< HEAD
     nome: '',
     telefone: '',
     email: '',
@@ -82,10 +99,29 @@ function SolicitacaoFrete() {
 
     // Gerando o PDF
     doc.save('folha_os_motoboy.pdf');
+=======
+    nome: "",
+    telefone: "",
+    email: "",
+    endereco: {
+      logradouro: "",
+      bairro: "",
+      numero: "",
+      complemento: "",
+    },
+  });
+
+  // Função para enviar a solicitação de frete
+  const handleSolicitarFrete = () => {
+    // Ações para processar o envio do frete
+    console.log("Solicitação enviada:", { remetente, destinatario });
+    alert("Solicitação de frete enviada!");
+>>>>>>> 65bd2915cc4e0389b07c5efe3188c58f43b50c79
   };
 
   return (
     <div className="container bg-light p-5">
+<<<<<<< HEAD
       <h3 className="bg-dark text-white rounded p-3 mb-4">Dados do Remetente</h3>
       <div className="mb-3">
         <label htmlFor="nome" className="form-label">Nome:</label>
@@ -183,6 +219,74 @@ function SolicitacaoFrete() {
           Gerar Folha de OS (PDF)
         </button>
       )}
+=======
+      {/* Dados do Remetente */}
+      <h3 className="bg-dark text-white rounded p-3 mb-4">Dados do Remetente</h3>
+      {Object.entries(remetente).map(([key, value]) => (
+        typeof value === 'object' ? (
+          Object.entries(value).map(([subKey, subValue]) => (
+            <div className="mb-3" key={`${key}.${subKey}`}>
+              <label className="form-label">{subKey.charAt(0).toUpperCase() + subKey.slice(1)}:</label>
+              <input
+                className="form-control"
+                value={subValue}
+                onChange={(e) =>
+                  setRemetente({
+                    ...remetente,
+                    [key]: { ...value, [subKey]: e.target.value },
+                  })
+                }
+              />
+            </div>
+          ))
+        ) : (
+          <div className="mb-3" key={key}>
+            <label className="form-label">{key.charAt(0).toUpperCase() + key.slice(1)}:</label>
+            <input
+              className="form-control"
+              value={value}
+              onChange={(e) => setRemetente({ ...remetente, [key]: e.target.value })}
+            />
+          </div>
+        )
+      ))}
+
+      {/* Dados do Destinatário */}
+      <h3 className="bg-dark text-white rounded p-3 mb-4">Dados do Destinatário</h3>
+      {Object.entries(destinatario).map(([key, value]) => (
+        typeof value === 'object' ? (
+          Object.entries(value).map(([subKey, subValue]) => (
+            <div className="mb-3" key={`${key}.${subKey}`}>
+              <label className="form-label">{subKey.charAt(0).toUpperCase() + subKey.slice(1)}:</label>
+              <input
+                className="form-control"
+                value={subValue}
+                onChange={(e) =>
+                  setDestinatario({
+                    ...destinatario,
+                    [key]: { ...value, [subKey]: e.target.value },
+                  })
+                }
+              />
+            </div>
+          ))
+        ) : (
+          <div className="mb-3" key={key}>
+            <label className="form-label">{key.charAt(0).toUpperCase() + key.slice(1)}:</label>
+            <input
+              className="form-control"
+              value={value}
+              onChange={(e) => setDestinatario({ ...destinatario, [key]: e.target.value })}
+            />
+          </div>
+        )
+      ))}
+
+      {/* Botão de Solicitação */}
+      <button onClick={handleSolicitarFrete} className="btn btn-secondary mt-4">
+        Solicitar Frete
+      </button>
+>>>>>>> 65bd2915cc4e0389b07c5efe3188c58f43b50c79
     </div>
   );
 }
