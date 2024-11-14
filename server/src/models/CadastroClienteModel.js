@@ -20,7 +20,7 @@ export async function createCliente(cliente) {
     cliente.bairro,
     cliente.cidade,
     cliente.email,
-    cliente.senha,
+    cliente.senha
   ];
 
   try {

@@ -2,7 +2,7 @@ import { createCliente } from '../models/CadastroClienteModel.js';
 import { validateCliente } from '../Validation/CadastroClienteValidation.js';
 
 export async function cadastrarCliente(req, res) {
-  console.log('CasatroClienteController cadastroCliente');
+  console.log('CadastroClienteController cadastroCliente');
   const cliente = req.body;
 
   if (validateCliente(cliente)) {
