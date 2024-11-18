@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';  // Certifique-se de importar o Bootstrap
-import axios from 'axios';  // Importar Axios para fazer a requisição
+import 'bootstrap/dist/css/bootstrap.min.css'; // Certifique-se de importar o Bootstrap
+import axios from 'axios'; // Importar Axios para fazer a requisição
 
 function CadastroCliente() {
-    const navigate = useNavigate();
-
-    // Estados para armazenar os dados do cliente
     const [nome, setNome] = useState('');
     const [sobrenome, setSobrenome] = useState('');
     const [cpf, setCpf] = useState('');
@@ -21,94 +18,7 @@ function CadastroCliente() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
 
-    // Função para manipular o cadastro
-    const handleCadastro = () => {
-        if (
-            nome.trim() === '' ||
-            sobrenome.trim() === '' ||
-            cpf.trim() === '' ||
-            telefone.trim() === '' ||
-            dataNascimento.trim() === '' ||
-            cep.trim() === '' ||
-            rua.trim() === '' ||
-            numero.trim() === '' ||
-            bairro.trim() === '' ||
-            cidade.trim() === '' ||
-            estado.trim() === '' ||
-            email.trim() === '' ||
-            senha.trim() === ''
-        ) {
-            alert('Por favor, preencha todos os campos.');
-        } else {
-            // Criando o objeto com os dados do cliente
-            const clienteData = {
-                nome,
-                sobrenome,
-                cpf,
-                telefone,
-                dataNascimento,
-                cep,
-                rua,
-                numero,
-                bairro,
-                cidade,
-                estado,
-                email,
-                senha
-            };
-
-            // Realizando a requisição POST para o backend
-            axios
-                .post('http://localhost:3000/cadastrar-cliente', clienteData)
-                .then((response) => {
-                    console.log('Cliente cadastrado com sucesso:', response.data);
-                    alert('Cliente cadastrado com sucesso!');
-                    
-                    // Limpar os campos após o cadastro
-                    setNome('');
-                    setSobrenome('');
-                    setCpf('');
-                    setTelefone('');
-                    setDataNascimento('');
-                    setCep('');
-                    setRua('');
-                    setNumero('');
-                    setBairro('');
-                    setCidade('');
-                    setEstado('');
-                    setEmail('');
-                    setSenha('');
-
-                    // Redirecionar para a tela inicial ou outra página
-                    navigate('/');
-                })
-                .catch((error) => {
-                    console.error('Erro ao cadastrar cliente:', error);
-                    alert('Erro ao cadastrar cliente. Tente novamente.');
-                });
-        }
-    };
-
-    // Função para cancelar e voltar à tela inicial
-    const handleCancel = () => {
-        // Limpar os campos
-        setNome('');
-        setSobrenome('');
-        setCpf('');
-        setTelefone('');
-        setDataNascimento('');
-        setCep('');
-        setRua('');
-        setNumero('');
-        setBairro('');
-        setCidade('');
-        setEstado('');
-        setEmail('');
-        setSenha('');
-        
-        // Redirecionar para a tela inicial
-        navigate('/');
-    };
+    const navigate = useNavigate(); // Para navegação após o cadastro
 
     // Função para buscar o endereço com base no CEP
     const handleCepChange = (e) => {
@@ -134,6 +44,35 @@ function CadastroCliente() {
                     alert('Erro ao buscar o CEP!');
                 });
         }
+    };
+
+    // Função para cadastrar cliente
+    const handleCadastro = () => {
+        const cliente = {
+            nome,
+            sobrenome,
+            cpf,
+            telefone,
+            dataNascimento,
+            cep,
+            rua,
+            numero,
+            bairro,
+            cidade,
+            estado,
+            email,
+            senha,
+        };
+
+        axios.post('http://localhost:3001/cadastro', cliente)
+            .then((response) => {
+                alert('Cliente cadastrado com sucesso!');
+                navigate('/'); // Redireciona para a página inicial após o cadastro
+            })
+            .catch((error) => {
+                console.error('Erro ao cadastrar cliente: ', error);
+                alert('Erro ao cadastrar cliente!');
+            });
     };
 
     return (
@@ -297,7 +236,7 @@ function CadastroCliente() {
 
             <div className="d-flex justify-content-between">
                 <button onClick={handleCadastro} className="btn btn-danger">Cadastrar</button>
-                <button onClick={handleCancel} className="btn btn-secondary">Cancelar</button>
+                <button onClick={() => navigate('/')} className="btn btn-secondary">Cancelar</button>
             </div>
         </div>
     );
