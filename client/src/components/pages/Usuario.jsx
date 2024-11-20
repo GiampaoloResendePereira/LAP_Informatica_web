@@ -2,22 +2,28 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useAuth } from './AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const { login } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:3001/login', { email, senha });
+            const response = await axios.post('http://localhost:5000/login', { email, senha });
 
-            if (response.data.role === 'admin') {
-                navigate('/administrador'); // Redireciona para a tela de administrador
-            } else if (response.data.role === 'cliente') {
-                navigate('/cliente'); // Redireciona para a tela de cliente
+            if (response.data.token) {
+                localStorage.setItem('token', response.data.token);
+                login();
+                if (response.data.role === 'admin') {
+                    navigate('/administrador'); // Redireciona para a tela de administrador
+                } else if (response.data.role === 'cliente') {
+                    navigate('/cliente'); // Redireciona para a tela de cliente
+                }
             } else {
                 alert('Email ou senha incorretos');
             }

@@ -12,13 +12,11 @@ function TelaCliente() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Verificar se o token está presente no localStorage
     const token = localStorage.getItem('token');
 
-    // Função para buscar os dados do cliente usando o token
     const fetchClienteData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/cliente-dados', {
+        const response = await axios.get('http://localhost:5000/cliente-dados', {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -26,32 +24,26 @@ function TelaCliente() {
         setClienteNome(nome);
       } catch (error) {
         console.error('Erro ao buscar dados do cliente: ', error);
-        // Redirecionar para a tela de login caso o token seja inválido ou erro na requisição
         localStorage.removeItem('token');
         navigate('/');
       }
     };
 
     if (token) {
-      fetchClienteData(); // Busca os dados do cliente se o token estiver presente
+      fetchClienteData();
     } else {
-      // Redirecionar para o login caso o token não esteja presente
       navigate('/');
     }
   }, [navigate]);
 
   const handleLogout = () => {
-    // Remover o token e redirecionar para a tela de login
     localStorage.removeItem('token');
     navigate('/');
   };
 
   return (
     <div>
-      {/* Barra superior de navegação */}
       <Navbar bg="danger" variant="dark" />
-
-      {/* Barra de navegação principal */}
       <Navbar bg="dark" variant="dark">
         <Container>
           <img src={logo} alt="Logo" height="50" />

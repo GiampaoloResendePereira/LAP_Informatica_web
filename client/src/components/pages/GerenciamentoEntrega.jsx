@@ -28,9 +28,23 @@ function GerenciamentoEntrega() {
 
   // Função para atualizar o status de um pedido
   const atualizarStatus = (id, novoStatus) => {
-    setPedidos(pedidos.map(pedido => 
-      pedido.id === id ? { ...pedido, status: novoStatus } : pedido
-    ));
+    fetch(`${API_URL}/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: novoStatus }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          setPedidos(pedidos.map(pedido => 
+            pedido.id === id ? { ...pedido, status: novoStatus } : pedido
+          ));
+        } else {
+          console.error('Erro ao atualizar status do pedido');
+        }
+      })
+      .catch((error) => console.error('Erro ao atualizar status do pedido:', error));
   };
 
   // Função para exibir os detalhes do pedido selecionado
@@ -132,7 +146,6 @@ function GerenciamentoEntrega() {
           <p><strong>Valor do Frete:</strong> {pedidoSelecionado.valor}</p>
           <p><strong>Status:</strong> {pedidoSelecionado.status}</p>
           <p><strong>Hora da Solicitação:</strong> {pedidoSelecionado.horaSolicitacao}</p>
-          {/* Adicione outras informações do pedido aqui */}
           <button onClick={fecharDetalhes} className="btn btn-danger" style={{ marginTop: '10px' }}>Fechar</button>
         </div>
       )}

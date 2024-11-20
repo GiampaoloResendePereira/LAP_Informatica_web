@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom'; // Para navegação entre telas
+import { useNavigate } from 'react-router-dom'; // Para navegação entre telas
 
 function SolicitacaoFrete({ location }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Dados de remetente e destinatário (com base nos dados passados da tela anterior)
   const [remetente, setRemetente] = useState(location.state.remetente);
@@ -19,21 +19,25 @@ function SolicitacaoFrete({ location }) {
   }, [remetente, destinatario]);
 
   // Função para calcular o frete com base no CEP
-  const calcularFrete = () => {
+  const calcularFrete = async () => {
     if (!remetente.endereco.cep || !destinatario.endereco.cep) {
       alert('Por favor, preencha os CEPs para cálculo do frete.');
       return;
     }
 
-    const distancia = Math.abs(
-      parseInt(remetente.endereco.cep.substring(0, 5)) -
-      parseInt(destinatario.endereco.cep.substring(0, 5))
-    );
+    try {
+      const response = await axios.post('http://localhost:5000/calcular-frete', {
+        cepOrigem: remetente.endereco.cep,
+        cepDestino: destinatario.endereco.cep,
+        peso: location.state.peso, // Certifique-se de passar o peso da tela anterior
+      });
 
-    const precoPorKm = 2.5; // Exemplo: R$2.50 por quilômetro
-    const valorFrete = distancia * precoPorKm;
-
-    setFrete(valorFrete.toFixed(2));
+      const { distanciaEmKm, valorFrete } = response.data;
+      setFrete(valorFrete.toFixed(2));
+    } catch (error) {
+      console.error('Erro ao calcular frete: ', error);
+      alert('Erro ao calcular frete!');
+    }
   };
 
   // Função para validar os campos antes de salvar
@@ -60,14 +64,14 @@ function SolicitacaoFrete({ location }) {
     }
 
     try {
-      await axios.post('http://localhost:3001/solicitar-frete', {
+      await axios.post('http://localhost:5000/solicitar-frete', {
         remetente,
         destinatario,
         frete,
       });
       alert('Solicitação de frete salva com sucesso!');
       // Após salvar, redireciona para a tela de acompanhamento
-      history.push('/acompanhamento');
+      navigate('/acompanhamento');
     } catch (error) {
       console.error('Erro ao salvar solicitação de frete: ', error);
       alert('Erro ao salvar solicitação de frete!');

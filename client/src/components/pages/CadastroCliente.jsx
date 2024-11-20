@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Certifique-se de importar o Bootstrap
-import axios from 'axios'; // Importar Axios para fazer a requisição
+import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 function CadastroCliente() {
     const [nome, setNome] = useState('');
@@ -17,15 +17,16 @@ function CadastroCliente() {
     const [estado, setEstado] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    const navigate = useNavigate(); // Para navegação após o cadastro
+    const navigate = useNavigate();
 
-    // Função para buscar o endereço com base no CEP
     const handleCepChange = (e) => {
         const cepValue = e.target.value;
         setCep(cepValue);
 
-        if (cepValue.length === 8) { // Verifica se o CEP tem 8 caracteres (formato válido)
+        if (cepValue.length === 8) {
             axios
                 .get(`https://viacep.com.br/ws/${cepValue}/json/`)
                 .then((response) => {
@@ -46,8 +47,29 @@ function CadastroCliente() {
         }
     };
 
-    // Função para cadastrar cliente
+    const validateInputs = () => {
+        if (!nome || !sobrenome || !cpf || !telefone || !dataNascimento || !cep || !rua || !numero || !bairro || !cidade || !estado || !email || !senha) {
+            return 'Por favor, preencha todos os campos!';
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return 'Por favor, insira um email válido!';
+        }
+        const cpfRegex = /^\d{11}$/;
+        if (!cpfRegex.test(cpf)) {
+            return 'Por favor, insira um CPF válido (11 dígitos)!';
+        }
+        return '';
+    };
+
     const handleCadastro = () => {
+        const validationError = validateInputs();
+        if (validationError) {
+            setError(validationError);
+            return;
+        }
+
+        setLoading(true);
         const cliente = {
             nome,
             sobrenome,
@@ -64,20 +86,25 @@ function CadastroCliente() {
             senha,
         };
 
-        axios.post('http://localhost:3001/cadastro', cliente)
+        axios.post('http://localhost:5000/cadastro', cliente)
             .then((response) => {
                 alert('Cliente cadastrado com sucesso!');
-                navigate('/'); // Redireciona para a página inicial após o cadastro
+                navigate('/');
             })
             .catch((error) => {
                 console.error('Erro ao cadastrar cliente: ', error);
-                alert('Erro ao cadastrar cliente!');
+                setError('Erro ao cadastrar cliente!');
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
 
     return (
         <div className="container bg-light p-5">
             <h2 className="bg-dark text-white rounded p-3 mb-4">Cadastro de Cliente</h2>
+
+            {error && <div className="alert alert-danger" role="alert">{error}</div>}
 
             <div className="mb-3">
                 <label htmlFor="nome" className="form-label">Nome</label>
@@ -146,7 +173,7 @@ function CadastroCliente() {
                     id="cep"
                     placeholder="Digite o CEP do cliente"
                     value={cep}
-                    onChange={handleCepChange} // Chama a função para buscar o endereço
+                    onChange={handleCepChange}
                 />
             </div>
 
@@ -235,7 +262,7 @@ function CadastroCliente() {
             </div>
 
             <div className="d-flex justify-content-between">
-                <button onClick={handleCadastro} className="btn btn-danger">Cadastrar</button>
+                <button onClick={handleCadastro} className="btn btn-danger" disabled={loading}>Cadastrar</button>
                 <button onClick={() => navigate('/')} className="btn btn-secondary">Cancelar</button>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
@@ -43,7 +43,7 @@ function CalculoFrete({ clienteNome }) {
 
     if (isValid) {
       try {
-        const response = await axios.post('http://localhost:3001/calcular-frete', {
+        const response = await axios.post('http://localhost:5000/calcular-frete', {
           cepOrigem,
           cepDestino,
           peso,
@@ -65,7 +65,7 @@ function CalculoFrete({ clienteNome }) {
 
   const handleSolicitarFrete = async () => {
     try {
-      await axios.post('http://localhost:3001/solicitar-frete', {
+      await axios.post('http://localhost:5000/solicitar-frete', {
         cepOrigem,
         cepDestino,
         peso,
