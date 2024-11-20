@@ -1,26 +1,27 @@
-import { updateParametro } from '../models/EditarParametroModel.js';
-import { isNullOrEmpty, validateParametro } from '../Validation/EditarParametroValidation.js';
+import { obterParametroPorId, atualizarParametro } from '../models/ParametroModel.js';
 
-export async function atualizandoParametro(req, res) {
-  console.log('EditarParametroController: Iniciando atualização do parâmetro');
-  
-  const { id } = req.params;
-  const parametro = req.body;
-
-  // Verifica se o ID é inválido ou se os parâmetros possuem campos vazios
-  if (isNullOrEmpty(id) || !validateParametro(parametro)) {
-    console.log('Validação falhou: Campos vazios ou ID ausente');
-    return res.status(400).json({ message: 'Parâmetro não pode conter campos vazios ou inválidos' });
-  }
-
+export const obterParametro = async (req, res) => {
   try {
-    const [status, resposta] = await updateParametro(parametro, id);
-    
-    // Retorna o status e a resposta recebida do modelo
-    console.log(`Atualização concluída com status ${status}`);
-    res.status(status).json(resposta);
+    const { id } = req.params;
+    const parametro = await obterParametroPorId(id);
+    if (parametro) {
+      res.json(parametro);
+    } else {
+      res.status(404).send('Parâmetro não encontrado');
+    }
   } catch (error) {
-    console.error('Erro ao atualizar o parâmetro:', error);
-    res.status(500).json({ message: 'Erro interno no servidor', error });
+    console.error('Erro ao obter parâmetro: ', error);
+    res.status(500).send('Erro ao obter parâmetro');
   }
-}
+};
+
+export const editarParametro = async (req, res) => {
+  try {
+    const parametro = req.body;
+    await atualizarParametro(parametro);
+    res.status(200).send('Parâmetro atualizado com sucesso');
+  } catch (error) {
+    console.error('Erro ao atualizar parâmetro: ', error);
+    res.status(500).send('Erro ao atualizar parâmetro');
+  }
+};
