@@ -4,7 +4,8 @@ import React from 'react';
 import GerenciamentoEntrega from '../pages/GerenciamentoEntrega';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
-import { useAuth } from './AuthContext';
+import { useAuth } from '../../context/AuthContext';
+
 
 const TelaAdministrador = () => {
   const { isAuthenticated, logout } = useAuth();

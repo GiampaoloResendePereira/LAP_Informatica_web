@@ -1,10 +1,10 @@
 import mysql from 'mysql2/promise';
 
-const conexao = mysql.createPool({
-  host: 'localhost', // Endereço do servidor MySQL
-  user: 'root',      // Usuário do MySQL
-  password: '',  // Senha do MySQL
-  database: 'lap',  // Nome do banco de dados
+const db = mysql.createPool({
+  host:"localhost",
+    user:"root",
+    password:"",
+    database:"painel"
 });
 
-export default conexao;
+export default db;
