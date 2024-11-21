@@ -1,6 +1,6 @@
 import { inserirCliente } from '../models/CadastroClienteModel.js';
 
-export const cadastrarCliente = async (req, res) => {
+export async function cadastrarCliente (req, res) {
   try {
     const cliente = req.body;
     await inserirCliente(cliente);
