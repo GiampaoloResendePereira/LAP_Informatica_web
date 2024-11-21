@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth } from '../../context/AuthContext';
+import logo from '../../assets/img/logo.png';
 
 
 const Login = () => {
@@ -63,7 +64,7 @@ const Login = () => {
                     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' // Adiciona uma sombra suave
                 }}
             >
-                <img src="path/to/logo.png" alt="Logo" className="login-logo" style={{ width: '250px', height: 'auto', marginBottom: '20px' }} />
+                <img src={logo} alt="Logo" className="login-logo" style={{ width: '250px', height: 'auto', marginBottom: '20px' }} />
 
                 <form className="login-form" onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                     <div className="mb-3">

@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import CalculoFrete from '../pages/CalculoFrete';
 import { useNavigate } from "react-router-dom";
-import '../../styles/Tela.css';
 import axios from 'axios'; // Importar Axios para fazer a requisição
 
 function TelaCliente() {
